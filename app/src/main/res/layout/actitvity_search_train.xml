@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <!-- Header Image (Placeholder for banner) -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:scaleType="centerCrop"
+        android:contentDescription="Banner Image" />
+
+    <!-- Departure Station -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn ga đi"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnDepartureStation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn ga đi"
+        android:backgroundTint="#E0E0E0"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp" />
+
+    <!-- Arrival Station -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn ga đến"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnArrivalStation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn ga đến"
+        android:backgroundTint="#E0E0E0"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp" />
+
+    <!-- Departure Date -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn ngày đi"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnDepartureDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn ngày đi"
+        android:backgroundTint="#E0E0E0"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp" />
+
+    <!-- Search Button -->
+    <Button
+        android:id="@+id/btnSearchTrain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tìm chuyến tàu"
+        android:backgroundTint="#2196F3"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="24dp" />
+
+</LinearLayout>
