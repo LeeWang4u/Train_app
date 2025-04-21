@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.train_app.R;
+import com.example.train_app.adapters.StationAdapter;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
 import com.example.train_app.model.Station;
@@ -23,7 +23,7 @@ public class SelectStationActivity extends AppCompatActivity {
 
     private ListView lvStations;
     private List<Station> stationList = new ArrayList<>();
-    private ArrayAdapter<Station> adapter;
+    private StationAdapter adapter; // Sử dụng StationAdapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class SelectStationActivity extends AppCompatActivity {
 
         lvStations = findViewById(R.id.lvStations);
 
-        // Khởi tạo adapter
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stationList);
+        // Khởi tạo StationAdapter
+        adapter = new StationAdapter(this, android.R.layout.simple_list_item_1, stationList);
         lvStations.setAdapter(adapter);
 
         // Gọi API để lấy danh sách ga
@@ -66,13 +66,13 @@ public class SelectStationActivity extends AppCompatActivity {
                     stationList.addAll(response.body());
                     adapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(SelectStationActivity.this, "Lỗi khi lấy danh sách ga", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectStationActivity.this, "Lỗi khi lấy danh sách ga: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Station>> call, Throwable t) {
-                Toast.makeText(SelectStationActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SelectStationActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
