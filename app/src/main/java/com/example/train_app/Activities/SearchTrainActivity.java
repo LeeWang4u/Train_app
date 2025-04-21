@@ -23,7 +23,7 @@ public class SearchTrainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.actitvity_search_train);
+        setContentView(R.layout.activity_search_train);
 
         btnDepartureStation = findViewById(R.id.btnDepartureStation);
         btnArrivalStation = findViewById(R.id.btnArrivalStation);
