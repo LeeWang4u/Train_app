@@ -63,6 +63,7 @@ public class SearchTrainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchTrainActivity.this, SelectStationActivity.class);
+                intent.putExtra("stationType", "departure"); // Truyền thông tin chọn ga đi
                 departureStationLauncher.launch(intent);
             }
         });
@@ -71,6 +72,7 @@ public class SearchTrainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchTrainActivity.this, SelectStationActivity.class);
+                intent.putExtra("stationType", "arrival"); // Truyền thông tin chọn ga đến
                 arrivalStationLauncher.launch(intent);
             }
         });
