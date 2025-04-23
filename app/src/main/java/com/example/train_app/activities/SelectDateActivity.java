@@ -137,12 +137,16 @@ public class SelectDateActivity extends AppCompatActivity implements MonthPagerA
             setResult(RESULT_OK, resultIntent);
             finish();
         });
+
+
     }
 
     private void updateMonthTitle() {
         Calendar month = months.get(currentMonthPosition);
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", new Locale("vi", "VN"));
-        tvMonth.setText(sdf.format(month.getTime()));
+        String formatted = sdf.format(month.getTime());
+        formatted = formatted.substring(0, 1).toUpperCase() + formatted.substring(1);
+        tvMonth.setText(formatted);
 //        tvMonth.setText("Tháng " + sdf.format(month.getTime()));
     }
 

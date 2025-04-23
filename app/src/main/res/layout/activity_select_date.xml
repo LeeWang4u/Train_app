@@ -80,7 +80,7 @@
             android:layout_weight="1"
             android:textColor="#2196F3"
             android:text="Tháng 4/2025"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center" />
 

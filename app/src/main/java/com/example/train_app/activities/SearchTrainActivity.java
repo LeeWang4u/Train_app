@@ -62,7 +62,7 @@ public class SearchTrainActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        selectedDate = result.getData().getStringExtra("selectedDate");
+                        selectedDate = result.getData().getStringExtra("selected_date");
                         btnDepartureDate.setText(selectedDate);
                     }
                 });
@@ -91,9 +91,13 @@ public class SearchTrainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchTrainActivity.this, SelectDateActivity.class);
+                if (selectedDate != null) {
+                    intent.putExtra("selected_date", selectedDate);
+                }
                 dateLauncher.launch(intent);
             }
         });
+
 
         btnSearchTrain.setOnClickListener(new View.OnClickListener() {
             @Override
