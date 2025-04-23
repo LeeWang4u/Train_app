@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".activities.SelectStationActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".activities.SelectDateActivity" />
     </application>
 
 </manifest>
