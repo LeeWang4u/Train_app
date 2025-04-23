@@ -27,8 +27,10 @@
 
         <activity android:name=".activities.SelectStationActivity" />
         <activity android:name=".MainActivity" />
+
         <activity android:name=".activities.InfoActivity"></activity>
         <activity android:name=".activities.SelectSeatActivity"></activity>
+        <activity android:name=".activities.SelectDateActivity" />
     </application>
 
 </manifest>
