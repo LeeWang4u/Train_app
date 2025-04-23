@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <!-- ProgressBar hiển thị khi dữ liệu đang được tải -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" /> <!-- Ẩn progress bar khi không tải dữ liệu -->
+
+    <!-- Thông tin vé -->
+    <LinearLayout
+        android:id="@+id/ticket_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#E3F2FD"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/text_departure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chuyến: Hà Nội - Sài Gòn"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thời gian: 20:00 - 06:00"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/text_seat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ghế: 12A"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Thông tin hành khách -->
+    <EditText
+        android:id="@+id/input_full_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Họ và tên"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:textSize="16sp" />
+    <Spinner
+        android:id="@+id/spinner_ticket_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/input_id_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CMND/CCCD"
+        android:inputType="number"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/text_ticket_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Giá vé: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#E91E63"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btn_cancel_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hủy vé"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#F44336"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+</LinearLayout>

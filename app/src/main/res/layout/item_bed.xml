@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:gravity="center"
+    android:layout_margin="6dp">
+
+
+<LinearLayout
+android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+<TextView
+android:id="@+id/bed_number"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="5"
+android:textColor="#000000"
+android:textSize="16sp"
+android:textStyle="bold" />
+
+<TextView
+android:id="@+id/bed_price"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="1074K"
+android:textColor="#666666"
+android:textSize="14sp" />
+    </LinearLayout>
+
+<View
+android:id="@+id/status_indicator"
+android:layout_width="20dp"
+android:layout_height="40dp"
+android:layout_marginStart="8dp"
+android:background="@drawable/bg_seat_available" />
+</LinearLayout>
