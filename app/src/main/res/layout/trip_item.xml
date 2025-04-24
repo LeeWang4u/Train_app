@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- Tên tàu và ảnh đầu tàu -->
+    <FrameLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/ivTrainIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/head_train_icon"
+            android:contentDescription="Train Icon" />
+
+        <TextView
+            android:id="@+id/tvTrainName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SE7"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <!-- Thời gian đi -->
+    <TextView
+        android:id="@+id/tvDepartureTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="06:10"
+        android:textSize="16sp"
+        android:gravity="center" />
+
+    <!-- Thời gian chạy -->
+    <TextView
+        android:id="@+id/tvDuration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="1n 12g 0p"
+        android:textSize="16sp"
+        android:gravity="center" />
+
+    <!-- Giờ đến -->
+    <TextView
+        android:id="@+id/tvArrivalTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="18:10"
+        android:textSize="16sp"
+        android:gravity="center" />
+</LinearLayout>
