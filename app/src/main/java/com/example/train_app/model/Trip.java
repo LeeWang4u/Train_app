@@ -1,10 +1,11 @@
 package com.example.train_app.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Trip {
+public class Trip implements Serializable {
     private int tripId;
     private String trainName;
     private BigDecimal basePrice;

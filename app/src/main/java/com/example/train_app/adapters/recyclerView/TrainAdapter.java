@@ -66,6 +66,7 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.TrainViewHol
                 // Tạo Intent để chuyển sang màn hình mới
                 Intent intent = new Intent(holder.itemView.getContext(), TrainDetailActivity.class);
                 intent.putExtra("tripDetailRequest", tripDetailRequest);
+                intent.putExtra("trip", trip);
 
 
                 Log.d("ChiTietTau", trip.getTripId() + " " + trip.getDepartureStation() + " " + trip.getDepartureStation());
