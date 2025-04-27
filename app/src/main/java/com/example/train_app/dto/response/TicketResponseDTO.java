@@ -1,10 +1,11 @@
 package com.example.train_app.dto.response;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
 
-public class TicketResponseDTO {
+public class TicketResponseDTO implements Serializable {
     private int ticketId;
     private int tripId;
     private String departureStation;
@@ -12,7 +13,7 @@ public class TicketResponseDTO {
     private int seatId;
     private String trainName;
     private String routeName;
-    private LocalDate tripDate;
+
 
     public int getTicketId() {
         return ticketId;
@@ -22,13 +23,9 @@ public class TicketResponseDTO {
         this.ticketId = ticketId;
     }
 
-    public LocalDate getTripDate() {
-        return tripDate;
-    }
 
-    public void setTripDate(LocalDate tripDate) {
-        this.tripDate = tripDate;
-    }
+
+
 
     public String getRouteName() {
         return routeName;

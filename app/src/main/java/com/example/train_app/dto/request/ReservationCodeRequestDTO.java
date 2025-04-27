@@ -1,10 +1,11 @@
 package com.example.train_app.dto.request;
 
+import java.io.Serializable;
 import java.util.List;
 
 
 
-public class ReservationCodeRequestDTO {
+public class ReservationCodeRequestDTO implements Serializable {
     private CustomerDTO customerDTO;
 
 

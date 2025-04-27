@@ -3,7 +3,9 @@ package com.example.train_app.dto.request;
 
 import com.example.train_app.dto.response.TicketType;
 
-public class PassengerDTO {
+import java.io.Serializable;
+
+public class PassengerDTO implements Serializable {
 
     private String Cccd;
 
