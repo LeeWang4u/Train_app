@@ -1,6 +1,8 @@
 package com.example.train_app.api;
 
 
+import com.example.train_app.dto.request.TripSeatRequestDTO;
+import com.example.train_app.dto.response.TripAvailabilityResponseDTO;
 import com.example.train_app.model.Station;
 import java.util.List;
 import retrofit2.Call;
@@ -27,4 +29,8 @@ public interface ApiService {
 
     @GET("tickets/getTicketType")
     Call<List<TicketType>> getTicketTypes();
+
+    @POST("carriages/seats")
+    Call<TripAvailabilityResponseDTO> getCarriagesAndSeat(@Body TripSeatRequestDTO tripSeatRequestDTO);
+
 }

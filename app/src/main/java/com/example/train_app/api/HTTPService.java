@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HTTPService {
 
-    public static final String APP_PATH = "http://192.168.1.37:8080/";
+    public static final String APP_PATH = "http://192.168.0.101:8080/api/";
 
 
     private static Retrofit retrofit;

@@ -2,11 +2,12 @@ package com.example.train_app.dto.request;
 
 import com.example.train_app.dto.response.TicketType;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
 
-public class TicketRequestDTO {
+public class TicketRequestDTO implements Serializable {
 
     private int ticketId;
 

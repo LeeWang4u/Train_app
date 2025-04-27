@@ -1,9 +1,10 @@
 package com.example.train_app.dto.response;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
-public class TicketType {
+public class TicketType implements Serializable  {
     private int ticketTypeId;
 
     private String ticketTypeName;

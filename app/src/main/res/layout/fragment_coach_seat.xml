@@ -12,6 +12,7 @@
 
         <!-- Tiêu đề -->
         <TextView
+            android:id="@+id/coach_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Coach number 1 - Soft seat air-conditioned"

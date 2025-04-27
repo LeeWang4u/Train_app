@@ -1,8 +1,9 @@
 package com.example.train_app.dto.request;
 
 
+import java.io.Serializable;
 
-public class CustomerDTO {
+public class CustomerDTO implements Serializable {
     private String cccd;
 
     private String email;

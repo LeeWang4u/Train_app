@@ -1,7 +1,9 @@
 package com.example.train_app.dto.request;
 
 
-public class TicketReservationReqDTO {
+import java.io.Serializable;
+
+public class TicketReservationReqDTO  implements Serializable {
 
 
 
