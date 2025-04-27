@@ -25,13 +25,16 @@
             </intent-filter>
         </activity>
 
-<!--        <activity android:name=".activities.SearchTrainActivity"/>-->
         <activity android:name=".activities.SelectStationActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".activities.InfoActivity"/>
         <activity android:name=".activities.SelectSeatActivity"/>
         <activity android:name=".activities.SelectDateActivity" />
         <activity android:name=".activities.TrainSearchResultActivity"/>
+        <activity android:name=".activities.SeatDetailActivity"/>
+<!--        <activity android:name=".MainActivity" />-->
+
+
     </application>
 
 </manifest>
