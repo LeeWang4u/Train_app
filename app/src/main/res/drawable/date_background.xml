@@ -1,0 +1,24 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Trạng thái được chọn (nền xanh, viền đỏ) -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#2196F3" /> <!-- Nền xanh -->
+            <stroke android:width="2dp" android:color="#FF0000" /> <!-- Viền đỏ -->
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+    <!-- Trạng thái bị vô hiệu (ngày trong quá khứ) -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#E0E0E0" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+    <!-- Trạng thái bình thường -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+</selector>

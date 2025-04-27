@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.recyclerview)
+    implementation(libs.viewpager)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -28,6 +28,7 @@ public class SearchTrainActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> departureStationLauncher;
     private ActivityResultLauncher<Intent> arrivalStationLauncher;
+    private ActivityResultLauncher<Intent> dateLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,15 @@ public class SearchTrainActivity extends AppCompatActivity {
                     }
                 });
 
+        dateLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        selectedDate = result.getData().getStringExtra("selected_date");
+                        btnDepartureDate.setText(selectedDate);
+                    }
+                });
+
         fetchStations();
 
         btnDepartureStation.setOnClickListener(new View.OnClickListener() {
@@ -80,24 +90,14 @@ public class SearchTrainActivity extends AppCompatActivity {
         btnDepartureDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        SearchTrainActivity.this,
-                        (view, yearSelected, monthSelected, dayOfMonth) -> {
-                            selectedDate = dayOfMonth + "/" + (monthSelected + 1) + "/" + yearSelected;
-                            btnDepartureDate.setText(selectedDate);
-                        },
-                        year,
-                        month,
-                        day
-                );
-                datePickerDialog.show();
+                Intent intent = new Intent(SearchTrainActivity.this, SelectDateActivity.class);
+                if (selectedDate != null) {
+                    intent.putExtra("selected_date", selectedDate);
+                }
+                dateLauncher.launch(intent);
             }
         });
+
 
         btnSearchTrain.setOnClickListener(new View.OnClickListener() {
             @Override
