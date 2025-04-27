@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
@@ -9,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@color/baseBackground"
         android:orientation="horizontal"
         android:padding="16dp">
 
@@ -20,7 +21,8 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Back"
-            android:src="@drawable/back" />
+            android:src="@drawable/back"
+            app:tint="#FFFFFF" />
 
         <!-- Lộ trình -->
         <TextView
@@ -29,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Hà Nội - Sài Gòn"
+            android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -38,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:padding="16dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -51,7 +55,7 @@
             android:id="@+id/tvPreviousDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="10dp"
             android:text="08/05/2025"
             android:textColor="#A4A7AD"
             android:textSize="14sp" />
@@ -60,7 +64,7 @@
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="10dp"
             android:text="08/05/2025"
             android:textColor="#000000"
             android:textSize="16sp" />
@@ -69,7 +73,7 @@
             android:id="@+id/tvNextDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="10dp"
             android:text="08/05/2025"
             android:textColor="#A4A7AD"
             android:textSize="14sp" />
@@ -82,47 +86,31 @@
             android:src="@drawable/forward" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D1D1D1" />
+
 
     <!-- RecyclerView hiển thị danh sách chuyến tàu -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTrainResults"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTrainResults"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp" />
+    <TextView
+        android:id="@+id/txtNoTrips"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp" />
+        android:layout_height="wrap_content"
+        android:text="Không có chuyến tàu phù hợp!"
+        android:textColor="@color/base"
+        android:textSize="20sp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:visibility="gone" />
+
+
 </LinearLayout>
 
 
-    <!--<LinearLayout-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:orientation="horizontal">-->
-
-<!--<TextView-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="Tên tàu"-->
-<!--    android:textSize="16sp"-->
-<!--    android:paddingHorizontal="16dp" />-->
-
-<!--<TextView-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="Giờ đi"-->
-<!--    android:textSize="16sp"-->
-<!--    android:paddingHorizontal="16dp" />-->
-
-<!--<TextView-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="Thời gian chạy"-->
-<!--    android:textSize="16sp"-->
-<!--    android:paddingHorizontal="16dp" />-->
-
-<!--<TextView-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="Giờ đến"-->
-<!--    android:textSize="16sp"-->
-<!--    android:paddingHorizontal="16dp" />-->
-<!--</LinearLayout>-->

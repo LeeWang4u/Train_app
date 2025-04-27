@@ -1,6 +1,5 @@
 package com.example.train_app.model;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,17 +8,18 @@ public class Trip {
     private int tripId;
     private String trainName;
     private BigDecimal basePrice;
-    private LocalDate tripDate;
+    private String tripDate;           // <-- đổi thành String
     private String tripStatus;
     private String departureStation;
     private String arrivalStation;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private String departureTime;      // <-- đổi thành String
+    private String arrivalTime;        // <-- đổi thành String
     private int availableSeats;
+    // Constructor
 
-    public Trip(int tripId, String trainName, BigDecimal basePrice, LocalDate tripDate, String tripStatus,
-                String departureStation, String arrivalStation, LocalDateTime departureTime,
-                LocalDateTime arrivalTime, int availableSeats) {
+    public Trip(int tripId, String trainName, BigDecimal basePrice, String tripDate,
+                String tripStatus, String departureStation, String arrivalStation,
+                String departureTime, String arrivalTime, int availableSeats) {
         this.tripId = tripId;
         this.trainName = trainName;
         this.basePrice = basePrice;
@@ -31,6 +31,7 @@ public class Trip {
         this.arrivalTime = arrivalTime;
         this.availableSeats = availableSeats;
     }
+
 
     public int getTripId() {
         return tripId;
@@ -48,11 +49,11 @@ public class Trip {
         this.trainName = trainName;
     }
 
-    public LocalDate getTripDate() {
+    public String getTripDate() {
         return tripDate;
     }
 
-    public void setTripDate(LocalDate tripDate) {
+    public void setTripDate(String tripDate) {
         this.tripDate = tripDate;
     }
 
@@ -72,14 +73,6 @@ public class Trip {
         this.tripStatus = tripStatus;
     }
 
-    public String getArrivalStation() {
-        return arrivalStation;
-    }
-
-    public void setArrivalStation(String arrivalStation) {
-        this.arrivalStation = arrivalStation;
-    }
-
     public String getDepartureStation() {
         return departureStation;
     }
@@ -88,19 +81,27 @@ public class Trip {
         this.departureStation = departureStation;
     }
 
-    public LocalDateTime getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 
-    public LocalDateTime getArrivalTime() {
+    public String getArrivalStation() {
+        return arrivalStation;
+    }
+
+    public void setArrivalStation(String arrivalStation) {
+        this.arrivalStation = arrivalStation;
+    }
+
+    public String getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
+    public void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 

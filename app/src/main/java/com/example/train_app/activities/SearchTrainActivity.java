@@ -1,5 +1,7 @@
 package com.example.train_app.activities;
 
+import static com.example.train_app.helper.Format.formatDateToDashYMD;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.train_app.R;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
+import com.example.train_app.container.request.TripRequest;
 import com.example.train_app.model.Station;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -111,6 +114,11 @@ public class SearchTrainActivity extends AppCompatActivity {
                 } else if (!stationNames.contains(selectedArrivalStation)) {
                     Toast.makeText(SearchTrainActivity.this, "Ga đến không hợp lệ", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    TripRequest tripRequest = new TripRequest(selectedDepartureStation, selectedArrivalStation, formatDateToDashYMD(selectedDate) );
+                    Intent intent = new Intent(SearchTrainActivity.this, TrainSearchResultActivity.class);
+                    intent.putExtra("tripRequest", tripRequest);
+                    startActivity(intent);
                     Toast.makeText(SearchTrainActivity.this, "Tìm chuyến tàu từ " + selectedDepartureStation + " đến " + selectedArrivalStation + " vào ngày " + selectedDate, Toast.LENGTH_LONG).show();
                 }
             }

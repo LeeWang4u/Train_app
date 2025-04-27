@@ -1,61 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp"
-    android:background="?attr/selectableItemBackground">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#E7E7E7">
 
-    <!-- Tên tàu và ảnh đầu tàu -->
-    <FrameLayout
-        android:layout_width="60dp"
-        android:layout_height="60dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
 
-        <ImageView
-            android:id="@+id/ivTrainIcon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/head_train_icon"
-            android:contentDescription="Train Icon" />
-
+        <!-- Giờ và ga xuất phát -->
         <TextView
-            android:id="@+id/tvTrainName"
+            android:id="@+id/txt_departure_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SE7"
-            android:textSize="16sp"
-            android:textColor="#FFFFFF"
+            android:text="15:00"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_departure_station"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ga Sài Gòn"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/txt_departure_time"
+            app:layout_constraintStart_toStartOf="@id/txt_departure_time"/>
+
+        <!-- Giờ và ga đến -->
+        <TextView
+            android:id="@+id/txt_arrival_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="04:35"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_arrival_station"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ga Hà Nội"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/txt_arrival_time"
+            app:layout_constraintEnd_toEndOf="@id/txt_arrival_time"/>
+
+        <!-- Thời gian đi + mũi tên -->
+        <LinearLayout
+            android:id="@+id/layout_duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:gravity="center"
-            android:layout_gravity="center" />
-    </FrameLayout>
+            android:paddingTop="10dp"
+            app:layout_constraintTop_toTopOf="@id/txt_departure_time"
+            app:layout_constraintBottom_toBottomOf="@id/txt_arrival_time"
+            app:layout_constraintStart_toEndOf="@id/txt_departure_time"
+            app:layout_constraintEnd_toStartOf="@id/txt_arrival_time">
 
-    <!-- Thời gian đi -->
-    <TextView
-        android:id="@+id/tvDepartureTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="06:10"
-        android:textSize="16sp"
-        android:gravity="center" />
+            <TextView
+                android:id="@+id/txt_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="37h35"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
-    <!-- Thời gian chạy -->
-    <TextView
-        android:id="@+id/tvDuration"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="1n 12g 0p"
-        android:textSize="16sp"
-        android:gravity="center" />
+            <ImageView
+                android:id="@+id/img_arrow"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/baseline_arrow_right_alt_24"
+                app:tint="@android:color/black" />
+        </LinearLayout>
 
-    <!-- Giờ đến -->
-    <TextView
-        android:id="@+id/tvArrivalTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="18:10"
-        android:textSize="16sp"
-        android:gravity="center" />
-</LinearLayout>
+        <!-- Tên tàu -->
+        <TextView
+            android:id="@+id/txt_train_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tàu SE6"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/txt_departure_station"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Chỗ trống còn -->
+        <TextView
+            android:id="@+id/txt_available_seats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Còn 48 chỗ"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_orange_rounded"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/txt_train_name"
+            app:layout_constraintStart_toEndOf="@id/txt_train_name"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Nút chọn -->
+        <Button
+            android:id="@+id/btn_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/base"
+            android:drawableStart="@drawable/train_png"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            app:layout_constraintTop_toTopOf="@id/txt_train_name"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+
+<!--<TextView-->
+<!--android:id="@+id/txt_no_trips"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="Không có chuyến tàu nào"-->
+<!--android:textSize="16sp"-->
+<!--android:textColor="@android:color/black"-->
+<!--android:visibility="gone"-->
+<!--tools:ignore="MissingConstraints" />-->
+
