@@ -80,7 +80,6 @@ public class SeatDetailActivity extends AppCompatActivity {
                     });
                     if(ReservationSeat.sumSelectedSeat()<1){
                         Intent intent = new Intent(SeatDetailActivity.this, SelectSeatActivity.class);
-
                         startActivity(intent);
                     }
 
