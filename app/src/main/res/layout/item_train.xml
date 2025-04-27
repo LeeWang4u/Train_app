@@ -1,0 +1,73 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:gravity="center"
+    android:textSize="14sp"
+    android:background="@drawable/date_selector"
+    android:layout_margin="2dp" />
+
+<!--<androidx.constraintlayout.widget.ConstraintLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content">-->
+
+<!--    &lt;!&ndash; Cột 1: Ảnh đầu tàu với tên tàu &ndash;&gt;-->
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/train_image"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:src="@drawable/head_train_icon"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/train_name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="SE7"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="@id/train_image"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/train_image"-->
+<!--        app:layout_constraintTop_toTopOf="@id/train_image"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/train_image"-->
+<!--        android:translationY="-10dp"/>-->
+
+<!--    &lt;!&ndash; Cột 2: Thời gian đi &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/departure_time"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="08:00"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/train_image"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/duration"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    &lt;!&ndash; Cột 3: Thời gian chạy &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/duration"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="2h 30m"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/departure_time"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/arrival_time"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    &lt;!&ndash; Cột 4: Giờ đến &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/arrival_time"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="10:30"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/duration"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

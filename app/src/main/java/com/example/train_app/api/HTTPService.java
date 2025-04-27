@@ -8,6 +8,7 @@ public class HTTPService {
 
     public static final String APP_PATH = "http://192.168.0.101:8080/api/";
 
+//    public static final String APP_PATH = "http://192.168.1.84:8080/";
 
     private static Retrofit retrofit;
 

@@ -2,6 +2,7 @@ package com.example.train_app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -156,5 +157,6 @@ public class SelectDateActivity extends AppCompatActivity implements MonthPagerA
         monthPagerAdapter.updateSelectedDate(selectedDate);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         tvDepartureDate.setText(sdf.format(selectedDate.getTime()));
+        Log.d("DEBUG_DATE", "Ngày được chọn là: " + sdf.format(selectedDate.getTime()));
     }
 }

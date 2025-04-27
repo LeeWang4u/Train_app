@@ -3,6 +3,7 @@ package com.example.train_app.api;
 
 import com.example.train_app.dto.request.TripSeatRequestDTO;
 import com.example.train_app.dto.response.TripAvailabilityResponseDTO;
+import com.example.train_app.container.request.TripRequest;
 import com.example.train_app.model.Station;
 import java.util.List;
 import retrofit2.Call;
@@ -14,9 +15,16 @@ import com.example.train_app.dto.request.TicketReservationReqDTO;
 import com.example.train_app.dto.response.TicketType;
 import com.example.train_app.dto.response.BookingResponse;
 import com.example.train_app.dto.response.TicketResponseDTO;
+import com.example.train_app.model.Trip;
+
 public interface ApiService {
     @GET("station/all")
     Call<List<Station>> getAllStations();
+
+
+    // Trip
+    @POST("api/trips/searchs")
+    Call<List<Trip>> searchTripsByStationsAndDate(@Body TripRequest tripRequest);
 
     @POST("tickets/confirmTicket")
     Call<BookingResponse> confirmTicket(@Body ReservationCodeRequestDTO reservationCodeRequestDTO);
