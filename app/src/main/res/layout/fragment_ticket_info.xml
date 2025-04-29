@@ -49,7 +49,7 @@
 
     <!-- Thông tin hành khách -->
     <EditText
-        android:id="@+id/input_full_name"
+        android:id="@+id/input_full_name_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Họ và tên"
@@ -63,7 +63,7 @@
         android:layout_marginTop="8dp" />
 
     <EditText
-        android:id="@+id/input_id_number"
+        android:id="@+id/input_CCCD_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="CMND/CCCD"

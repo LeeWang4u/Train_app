@@ -2,9 +2,10 @@ package com.example.train_app.dto.request;
 
 import com.example.train_app.dto.response.TicketResponseDTO;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SelectSeatReqDTO {
+public class SelectSeatReqDTO implements Serializable {
 
     private int seatId;
 

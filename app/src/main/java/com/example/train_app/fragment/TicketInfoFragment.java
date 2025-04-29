@@ -1,13 +1,16 @@
 package com.example.train_app.fragment;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,8 +20,13 @@ import androidx.fragment.app.Fragment;
 import com.example.train_app.R;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
+import com.example.train_app.dto.request.SelectSeatReqDTO;
+import com.example.train_app.dto.request.TicketRequestDTO;
 import com.example.train_app.dto.response.TicketType;
+import com.example.train_app.utils.Format;
+import com.example.train_app.utils.ReservationSeat;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +40,26 @@ public class TicketInfoFragment extends Fragment {
     private List<TicketType> ticketTypes;
     private ProgressBar progressBar;  // Thêm ProgressBar để hiển thị khi đang tải dữ liệu
 
+    private TextView textSeat;
+
+    private TextView textDeparture;
+
+    private EditText inputFullName, inputCCCD;
+
+    private TextView textPrice;
+
+    private TicketType selectedType;
+
+    private BigDecimal finalPrice;
+
+
+    public interface OnTicketPriceChangeListener {
+        void onPriceChanged();
+    }
+    private OnTicketPriceChangeListener priceChangeListener;
+    public void setPriceChangeListener(OnTicketPriceChangeListener listener) {
+        priceChangeListener = listener;
+    }
     public TicketInfoFragment() {
         // Required empty public constructor
     }
@@ -48,14 +76,21 @@ public class TicketInfoFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+
+            super.onViewCreated(view, savedInstanceState);
         spinnerTicketType = view.findViewById(R.id.spinner_ticket_type);
-        progressBar = view.findViewById(R.id.progress_bar);  // Thêm ProgressBar
-
-        loadTicketTypes();
-    }
-
-    private void loadTicketTypes() {
+        progressBar = view.findViewById(R.id.progress_bar);
+        inputFullName = view.findViewById(R.id.input_full_name_pass);
+        inputCCCD = view.findViewById(R.id.input_CCCD_pass);
+        textSeat = view.findViewById(R.id.text_seat);
+        textDeparture = view.findViewById(R.id.text_departure);
+        textPrice = view.findViewById(R.id.text_ticket_price);
+        SelectSeatReqDTO seat = (SelectSeatReqDTO) getArguments().getSerializable("seat_data");
+            if (seat != null) {
+                textSeat.setText(Format.formatCompartment(seat.getStt(),seat.getSeatName()));
+                textDeparture.setText(seat.getTicketResponseDTO().getDepartureStation()+" - "+ seat.getTicketResponseDTO().getArrivalStation());
+                textPrice.setText(Format.formatPriceToVnd(seat.getTicketPrice()));
+            }
         // Hiển thị ProgressBar khi đang tải dữ liệu
         progressBar.setVisibility(View.VISIBLE);
 
@@ -91,9 +126,13 @@ public class TicketInfoFragment extends Fragment {
                     spinnerTicketType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            TicketType selectedType = ticketTypes.get(position);
-                            int selectedId = selectedType.getTicketTypeId(); // Lấy ID loại vé
-                            Toast.makeText(requireContext(), "Đã chọn loại vé ID: " + selectedId, Toast.LENGTH_SHORT).show();
+                            selectedType = ticketTypes.get(position);
+                            finalPrice = getPrice(seat.getTicketPrice(),selectedType.getDiscountRate());
+                            ReservationSeat.setFinalTotalPrice(seat.getTicketPrice(),finalPrice);
+                            textPrice.setText(Format.formatPriceToVnd(finalPrice));
+                            if (priceChangeListener != null) {
+                                priceChangeListener.onPriceChanged();
+                            }
                         }
 
                         @Override
@@ -113,5 +152,24 @@ public class TicketInfoFragment extends Fragment {
                 Toast.makeText(requireContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public TicketRequestDTO getTicketInfo(){
+        SelectSeatReqDTO seat = (SelectSeatReqDTO) getArguments().getSerializable("seat_data");
+        TicketRequestDTO ticket = new TicketRequestDTO(seat.getTicketResponseDTO().getTicketId(),selectedType,"Hà Nội",
+                "Sài Gòn",19,seat.getSeatId(),
+                finalPrice,seat.getTicketPrice(),
+                 inputCCCD.getText().toString().trim(),
+                inputFullName.getText().toString().trim(),
+                selectedType.getDiscountRate());
+        return ticket;
+
+    }
+    public BigDecimal getPrice(BigDecimal a, BigDecimal b) {
+        return  a.multiply(BigDecimal.valueOf(100).subtract(b))
+                .divide(BigDecimal.valueOf(100));
+    }
+    public BigDecimal getFinalPrice(){
+        return finalPrice;
     }
 }
