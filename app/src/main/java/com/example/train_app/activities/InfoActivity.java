@@ -1,5 +1,6 @@
 package com.example.train_app.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,13 +30,20 @@ import com.example.train_app.fragment.TicketInfoFragment;
 import com.example.train_app.utils.Format;
 import com.example.train_app.utils.ReservationSeat;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import vn.momo.momo_partner.AppMoMoLib;
 
 public class InfoActivity extends AppCompatActivity {
     // Views
@@ -47,13 +55,20 @@ public class InfoActivity extends AppCompatActivity {
 
     private ReservationCodeRequestDTO reservationCodeRequestDTO;
 
+    private String amount = "10000";
+    private String fee = "0";
+    int environment = 0;//developer default
+    private String merchantName = "HoangNgoc"; //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
 
+    private String merchantCode = "MOMOC2IC20220501";//Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
+    private String merchantNameLabel = "Đường sắt số một Việt Nam";
+    private String description = "Thanh toán đặt vé tàu online";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Chuyển sang layout mới có <LinearLayout id="fragment_container">
         setContentView(R.layout.activity_customer_info);
-
+        AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
         // Ánh xạ view
         fragmentContainer = findViewById(R.id.fragment_container);
         inputFullName = findViewById(R.id.input_full_name);
@@ -144,7 +159,7 @@ public class InfoActivity extends AppCompatActivity {
             }
         }
         reservationCodeRequestDTO.setTicketRequestDTO(ticketRequestDTO);
-
+        requestPayment(customerDTO);
         ApiService api = HTTPService
                 .getInstance()
                 .create(ApiService.class);
@@ -180,5 +195,86 @@ public class InfoActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
+    }
+    //Get token through MoMo app
+    private void requestPayment(CustomerDTO customerDTO) {
+        AppMoMoLib.getInstance().setAction(AppMoMoLib.ACTION.PAYMENT);
+        AppMoMoLib.getInstance().setActionType(AppMoMoLib.ACTION_TYPE.GET_TOKEN);
+        amount = Format.formatPriceToVnd(ReservationSeat.getFinalTotalPrice());
+        String orderId = "DSVN" + System.currentTimeMillis();
+        String orderLabel = customerDTO.getFullName() + System.currentTimeMillis();
+        Map<String, Object> eventValue = new HashMap<>();
+        //client Required
+        eventValue.put("merchantname", merchantName); //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
+        eventValue.put("merchantcode", merchantCode); //Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
+        eventValue.put("amount", ReservationSeat.getFinalTotalPrice().setScale(0, RoundingMode.HALF_UP).intValueExact()); //Kiểu integer
+        eventValue.put("orderId", orderId);
+        eventValue.put("orderLabel", orderLabel); //gán nhãn
+
+        //client Optional - bill info
+        eventValue.put("merchantnamelabel", "Dịch vụ bán vé tàu");//gán nhãn
+        eventValue.put("fee", 0); //Kiểu integer
+        eventValue.put("description", description); //mô tả đơn hàng - short description
+
+        //client extra data
+        eventValue.put("requestId",  merchantCode+"merchant_billId_"+System.currentTimeMillis());
+        eventValue.put("partnerCode", merchantCode);
+        //Example extra data
+        JSONObject objExtraData = new JSONObject();
+        try {
+            objExtraData.put("site_code", "008");
+            objExtraData.put("site_name", "CGV Cresent Mall");
+            objExtraData.put("screen_code", 0);
+            objExtraData.put("screen_name", "Special");
+            objExtraData.put("movie_name", "Kẻ Trộm Mặt Trăng 3");
+            objExtraData.put("movie_format", "2D");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        eventValue.put("extraData", objExtraData.toString());
+
+        eventValue.put("extra", "");
+        AppMoMoLib.getInstance().requestMoMoCallBack(this, eventValue);
+
+
+    }
+    //Get token callback from MoMo app an submit to server side
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == AppMoMoLib.getInstance().REQUEST_CODE_MOMO && resultCode == -1) {
+            if(data != null) {
+                if(data.getIntExtra("status", -1) == 0) {
+                    //TOKEN IS AVAILABLE
+//                    tvMessage.setText("message: " + "Get token " + data.getStringExtra("message"));
+                    String token = data.getStringExtra("data"); //Token response
+                    String phoneNumber = data.getStringExtra("phonenumber");
+                    String env = data.getStringExtra("env");
+                    if(env == null){
+                        env = "app";
+                    }
+
+                    if(token != null && !token.equals("")) {
+                        // TODO: send phoneNumber & token to your server side to process payment with MoMo server
+                        // IF Momo topup success, continue to process your order
+                    } else {
+//                        tvMessage.setText("message: " + this.getString(R.string.not_receive_info));
+                    }
+                } else if(data.getIntExtra("status", -1) == 1) {
+                    //TOKEN FAIL
+                    String message = data.getStringExtra("message") != null?data.getStringExtra("message"):"Thất bại";
+//                    tvMessage.setText("message: " + message);
+                } else if(data.getIntExtra("status", -1) == 2) {
+                    //TOKEN FAIL
+//                    tvMessage.setText("message: " + this.getString(R.string.not_receive_info));
+                } else {
+                    //TOKEN FAIL
+//                    tvMessage.setText("message: " + this.getString(R.string.not_receive_info));
+                }
+            } else {
+//                tvMessage.setText("message: " + this.getString(R.string.not_receive_info));
+            }
+        } else {
+//            tvMessage.setText("message: " + this.getString(R.string.not_receive_info_err));
+        }
     }
 }
