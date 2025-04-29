@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.recyclerview)
     implementation(libs.viewpager)
+    implementation("com.github.momo-wallet:mobile-sdk:1.0.7")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

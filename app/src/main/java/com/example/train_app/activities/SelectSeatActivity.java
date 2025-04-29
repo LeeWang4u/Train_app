@@ -72,6 +72,12 @@ public class SelectSeatActivity extends AppCompatActivity {
 
         continueButton.setVisibility(View.GONE);
 
+//
+//        Intent intent = getIntent();
+//        TripDetailRequest tripDetailRequest = (TripDetailRequest) intent.getSerializableExtra("tripDetailRequest");
+//        Trip trip = (Trip) intent.getSerializableExtra("trip");
+
+
         Intent intent = getIntent();
         TripDetailRequest tripDetailRequest = (TripDetailRequest) intent.getSerializableExtra("tripDetailRequest");
         Trip trip = (Trip) intent.getSerializableExtra("trip");
@@ -79,6 +85,7 @@ public class SelectSeatActivity extends AppCompatActivity {
 
         TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(tripDetailRequest.getIdTrip(),
                 tripDetailRequest.getDepartureStation(), tripDetailRequest.getArrivalStation());
+
 
             ApiService apiService = HTTPService.getInstance().create(ApiService.class);
             Call<TripAvailabilityResponseDTO> call = apiService.getCarriagesAndSeat(tripSeatRequestDTO);
