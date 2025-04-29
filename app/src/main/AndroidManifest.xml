@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activities.SearchTrainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
 <!--        <activity android:name=".activities.SearchTrainActivity" />-->
         <activity android:name=".activities.SelectDateActivity" />
         <activity android:name=".activities.SelectStationActivity" />
-        <activity android:name=".MainActivity" />
+
         <activity android:name=".activities.InfoActivity"/>
         <activity android:name=".activities.SelectSeatActivity"/>
         <activity android:name=".activities.TrainSearchResultActivity"/>

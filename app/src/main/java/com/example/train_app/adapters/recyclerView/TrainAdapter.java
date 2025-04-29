@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.train_app.R;
+import com.example.train_app.activities.SelectSeatActivity;
 import com.example.train_app.activities.TrainDetailActivity;
 import com.example.train_app.container.request.TripDetailRequest;
 import com.example.train_app.model.Trip;
@@ -64,7 +65,7 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.TrainViewHol
                         trip.getArrivalStation(), trip.getTripId());
 
                 // Tạo Intent để chuyển sang màn hình mới
-                Intent intent = new Intent(holder.itemView.getContext(), TrainDetailActivity.class);
+                Intent intent = new Intent(holder.itemView.getContext(), SelectSeatActivity.class);
                 intent.putExtra("tripDetailRequest", tripDetailRequest);
                 intent.putExtra("trip", trip);
 

@@ -7,20 +7,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.train_app.R;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
+import com.example.train_app.dto.request.CustomerDTO;
 import com.example.train_app.dto.request.ReservationCodeRequestDTO;
+import com.example.train_app.dto.request.SelectSeatReqDTO;
+import com.example.train_app.dto.request.TicketRequestDTO;
+import com.example.train_app.dto.request.TicketReservationReqDTO;
 import com.example.train_app.dto.response.BookingResponse;
 import com.example.train_app.fragment.TicketInfoFragment;
+import com.example.train_app.utils.Format;
+import com.example.train_app.utils.ReservationSeat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,9 +40,12 @@ import retrofit2.Response;
 public class InfoActivity extends AppCompatActivity {
     // Views
     private LinearLayout fragmentContainer;
-    private EditText inputFullName, inputIdNumber, inputPhone;
+    private EditText inputFullName, inputIdNumber, inputPhone,inputEmail;
+
+    private TextView textTotalPrice;
     private Button btnPayment,btnBack;
 
+    private ReservationCodeRequestDTO reservationCodeRequestDTO;
 
 
     @Override
@@ -45,19 +57,25 @@ public class InfoActivity extends AppCompatActivity {
         // Ánh xạ view
         fragmentContainer = findViewById(R.id.fragment_container);
         inputFullName = findViewById(R.id.input_full_name);
-        inputIdNumber = findViewById(R.id.input_id_number);
+        inputEmail  =findViewById(R.id.input_email);
+        inputIdNumber = findViewById(R.id.input_CCCD);
         inputPhone = findViewById(R.id.input_phone);
         btnPayment = findViewById(R.id.btn_payment);
         btnBack = findViewById(R.id.btn_back);
+        textTotalPrice = findViewById(R.id.text_total_price);
 
-        List<String> tickets = Arrays.asList("Ticket 1", "Ticket 2");
+
+
+
 
         // Chỉ add fragment lần đầu, tránh add lại khi rotate màn hình
         if (savedInstanceState == null) {
+            textTotalPrice.setText(Format.formatPriceToVnd(ReservationSeat.getFinalTotalPrice()));
+
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
 
-            for (int i = 0; i < tickets.size(); i++) {
+            for (SelectSeatReqDTO seat : ReservationSeat.getSelectedSeats()) {
                 // 1) Tạo FrameLayout động làm container cho mỗi Fragment
                 FrameLayout frame = new FrameLayout(this);
                 int viewId = View.generateViewId();
@@ -71,12 +89,22 @@ public class InfoActivity extends AppCompatActivity {
                 lp.setMargins(0, 8, 0, 8);
                 fragmentContainer.addView(frame, lp);
 
-                // 2) Tạo Fragment và add vào FrameLayout vừa tạo
-                TicketInfoFragment frag = TicketInfoFragment.newInstance();
+
+                TicketInfoFragment frag = new TicketInfoFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("seat_data", seat);
+                frag.setArguments(bundle);
+                frag.setPriceChangeListener(new TicketInfoFragment.OnTicketPriceChangeListener() {
+                    @Override
+                    public void onPriceChanged() {
+                        textTotalPrice.setText(Format.formatPriceToVnd(ReservationSeat.getFinalTotalPrice()));
+                    }
+                });
                 ft.add(viewId, frag);
             }
 
             ft.commit();
+
         }
         btnBack.setOnClickListener(v -> {
             finish();  // Kết thúc Activity hiện tại và quay lại màn hình trước
@@ -97,14 +125,30 @@ public class InfoActivity extends AppCompatActivity {
     }
     private void callConfirmTicketApi() {
         // Giả sử bạn có mã đặt vé lấy từ input hoặc Intent
-        String reservationCode = "ABC123"; // Thay bằng mã thực tế
-
-        ReservationCodeRequestDTO dto = new ReservationCodeRequestDTO();
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFullName(inputFullName.getText().toString().trim());
+        customerDTO.setEmail(inputEmail.getText().toString().trim());
+        customerDTO.setCccd(inputIdNumber.getText().toString().trim());
+        customerDTO.setPhone(inputPhone.getText().toString().trim());
+        reservationCodeRequestDTO = new ReservationCodeRequestDTO();
+        reservationCodeRequestDTO.setCustomerDTO(customerDTO);
+        List<TicketRequestDTO> ticketRequestDTO = new ArrayList<>();
+        FragmentManager fm = getSupportFragmentManager();
+        List<Fragment> fragments = fm.getFragments();
+        for(Fragment frag:fragments){
+            if(frag instanceof TicketInfoFragment) {
+                TicketRequestDTO ticket = ((TicketInfoFragment) frag).getTicketInfo();
+                if(ticket!=null){
+                    ticketRequestDTO.add(ticket);
+                }
+            }
+        }
+        reservationCodeRequestDTO.setTicketRequestDTO(ticketRequestDTO);
 
         ApiService api = HTTPService
                 .getInstance()
                 .create(ApiService.class);
-        Call<BookingResponse> call = api.confirmTicket(dto);
+        Call<BookingResponse> call = api.confirmTicket(reservationCodeRequestDTO);
 
         call.enqueue(new Callback<BookingResponse>() {
             @Override
