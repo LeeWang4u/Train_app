@@ -58,7 +58,7 @@ public class SelectSeatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_seat);
-        TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(19,"Hà Nội","Sài Gòn");
+       // TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(19,"Hà Nội","Sài Gòn");
         // Ánh xạ view
         fragmentContainer = findViewById(R.id.fragment_container);
         progressBar = findViewById(R.id.progress_bar);
@@ -71,10 +71,21 @@ public class SelectSeatActivity extends AppCompatActivity {
         btnDetail = findViewById(R.id.btn_detail);
 
         continueButton.setVisibility(View.GONE);
+
 //
 //        Intent intent = getIntent();
 //        TripDetailRequest tripDetailRequest = (TripDetailRequest) intent.getSerializableExtra("tripDetailRequest");
 //        Trip trip = (Trip) intent.getSerializableExtra("trip");
+
+
+        Intent intent = getIntent();
+        TripDetailRequest tripDetailRequest = (TripDetailRequest) intent.getSerializableExtra("tripDetailRequest");
+        Trip trip = (Trip) intent.getSerializableExtra("trip");
+        Log.d("GET_INTENT_SUCCESS", tripDetailRequest.getIdTrip() + " " + tripDetailRequest.getDepartureStation() + " " +tripDetailRequest.getArrivalStation());
+
+        TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(tripDetailRequest.getIdTrip(),
+                tripDetailRequest.getDepartureStation(), tripDetailRequest.getArrivalStation());
+
 
             ApiService apiService = HTTPService.getInstance().create(ApiService.class);
             Call<TripAvailabilityResponseDTO> call = apiService.getCarriagesAndSeat(tripSeatRequestDTO);
