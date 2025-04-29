@@ -22,12 +22,14 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.train_app.R;
 import com.example.train_app.api.HTTPService;
 import com.example.train_app.api.ApiService;
+import com.example.train_app.container.request.TripDetailRequest;
 import com.example.train_app.dto.request.TripSeatRequestDTO;
 import com.example.train_app.dto.response.CarriageAvailabilityResponseDTO;
 import com.example.train_app.dto.response.TripAvailabilityResponseDTO;
 import com.example.train_app.fragment.Coach4BedsFragment;
 import com.example.train_app.fragment.Coach6BedsFragment;
 import com.example.train_app.fragment.CoachSeatFragment;
+import com.example.train_app.model.Trip;
 import com.example.train_app.utils.Format;
 import com.example.train_app.utils.ReservationSeat;
 
@@ -56,7 +58,7 @@ public class SelectSeatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_seat);
-        TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(19,"Hà Nội","Sài Gòn");
+       // TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(19,"Hà Nội","Sài Gòn");
         // Ánh xạ view
         fragmentContainer = findViewById(R.id.fragment_container);
         progressBar = findViewById(R.id.progress_bar);
@@ -70,11 +72,12 @@ public class SelectSeatActivity extends AppCompatActivity {
 
         continueButton.setVisibility(View.GONE);
 
-//        TripSeatRequestDTO requestDTO = (TripSeatRequestDTO) getIntent().getSerializableExtra("trip_request");
-
+        Intent intent = getIntent();
+        TripDetailRequest tripDetailRequest = (TripDetailRequest) intent.getSerializableExtra("tripDetailRequest");
+        Trip trip = (Trip) intent.getSerializableExtra("trip");
 
             ApiService apiService = HTTPService.getInstance().create(ApiService.class);
-            Call<TripAvailabilityResponseDTO> call = apiService.getCarriagesAndSeat(tripSeatRequestDTO);
+            Call<TripAvailabilityResponseDTO> call = apiService.getCarriagesAndSeat(TripDetailRequest);
 
             call.enqueue(new Callback<TripAvailabilityResponseDTO>() {
                 @Override
@@ -112,16 +115,16 @@ public class SelectSeatActivity extends AppCompatActivity {
 
         continueButton.setOnClickListener(v -> {
             if (ReservationSeat.sumSelectedSeat() > 0) {
-                Intent intent = new Intent(SelectSeatActivity.this, InfoActivity.class);
-                startActivity(intent);
+                Intent in = new Intent(SelectSeatActivity.this, InfoActivity.class);
+                startActivity(in);
             } else {
                 Toast.makeText(SelectSeatActivity.this, "Vui lòng chọn ghế trước khi thanh toán", Toast.LENGTH_SHORT).show();
             }
         });
 
         btnDetail.setOnClickListener(v -> {
-            Intent intent = new Intent(SelectSeatActivity.this,SeatDetailActivity.class);
-            startActivity(intent);
+            Intent in = new Intent(SelectSeatActivity.this,SeatDetailActivity.class);
+            startActivity(in);
         });
     }
 

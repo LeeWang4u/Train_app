@@ -10,6 +10,8 @@ import java.util.List;
 public class ReservationSeat {
     public static List<SelectSeatReqDTO> selectedSeats = new ArrayList<>();
     public static BigDecimal totalPrice=BigDecimal.ZERO;
+
+    public static BigDecimal finalTotalPrice = BigDecimal.ZERO;
     public static void addSeat(SelectSeatReqDTO seat) {
         selectedSeats.add(seat);
        totalPrice = totalPrice.add(seat.getTicketPrice());
@@ -35,5 +37,10 @@ public class ReservationSeat {
     public static BigDecimal getTotalPrice(){
         return totalPrice;
     }
-
+    public static void setFinalTotalPrice(BigDecimal price, BigDecimal finalPrice){
+        finalTotalPrice = getTotalPrice().subtract(price).add(finalPrice);
+    }
+    public static BigDecimal getFinalTotalPrice(){
+        return finalTotalPrice;
+    }
 }
