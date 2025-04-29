@@ -23,7 +23,7 @@ public interface ApiService {
 
 
     // Trip
-    @POST("api/trips/searchs")
+    @POST("trips/searchs")
     Call<List<Trip>> searchTripsByStationsAndDate(@Body TripRequest tripRequest);
 
     @POST("tickets/confirmTicket")
