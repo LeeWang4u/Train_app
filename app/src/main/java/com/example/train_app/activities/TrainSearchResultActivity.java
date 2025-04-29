@@ -15,6 +15,7 @@ import com.example.train_app.R;
 import com.example.train_app.adapters.recyclerView.TrainAdapter;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
+import com.example.train_app.container.request.TripDetailRequest;
 import com.example.train_app.container.request.TripRequest;
 import com.example.train_app.model.Trip;
 import java.time.LocalDate;
@@ -75,13 +76,29 @@ public class TrainSearchResultActivity extends AppCompatActivity {
         }
 
         // Khởi tạo TrainAdapter
+//        adapter = new TrainAdapter(trips, trip -> {
+//            Intent intent = new Intent(TrainSearchResultActivity.this, TrainDetailActivity.class);
+//            intent.putExtra("tripId", trip.getTripId()); // tripId là int
+//            intent.putExtra("departureStation", trip.getDepartureStation());
+//            intent.putExtra("arrivalStation", trip.getArrivalStation());
+//            startActivity(intent);
+//
+//        });
+
         adapter = new TrainAdapter(trips, trip -> {
-            Intent intent = new Intent(TrainSearchResultActivity.this, TrainDetailActivity.class);
-            intent.putExtra("tripId", trip.getTripId()); // tripId là int
-            intent.putExtra("departureStation", trip.getDepartureStation());
-            intent.putExtra("arrivalStation", trip.getArrivalStation());
+            TripDetailRequest tripDetailRequest = new TripDetailRequest(
+                    trip.getDepartureStation(),
+                    trip.getArrivalStation(),
+                    trip.getTripId()
+            );
+
+            Intent intent = new Intent(TrainSearchResultActivity.this, SelectSeatActivity.class);
+            intent.putExtra("tripDetailRequest", tripDetailRequest);
+            intent.putExtra("trip", trip); // nhớ rằng Trip phải implement Serializable hoặc Parcelable
+
             startActivity(intent);
         });
+
 
         // Cấu hình RecyclerView
         rvTrainResults.setLayoutManager(new LinearLayoutManager(this));

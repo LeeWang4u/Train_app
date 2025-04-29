@@ -75,9 +75,13 @@ public class SelectSeatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         TripDetailRequest tripDetailRequest = (TripDetailRequest) intent.getSerializableExtra("tripDetailRequest");
         Trip trip = (Trip) intent.getSerializableExtra("trip");
+        Log.d("GET_INTENT_SUCCESS", tripDetailRequest.getIdTrip() + " " + tripDetailRequest.getDepartureStation() + " " +tripDetailRequest.getArrivalStation());
+
+        TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(tripDetailRequest.getIdTrip(),
+                tripDetailRequest.getDepartureStation(), tripDetailRequest.getArrivalStation());
 
             ApiService apiService = HTTPService.getInstance().create(ApiService.class);
-            Call<TripAvailabilityResponseDTO> call = apiService.getCarriagesAndSeat(TripDetailRequest);
+            Call<TripAvailabilityResponseDTO> call = apiService.getCarriagesAndSeat(tripSeatRequestDTO);
 
             call.enqueue(new Callback<TripAvailabilityResponseDTO>() {
                 @Override

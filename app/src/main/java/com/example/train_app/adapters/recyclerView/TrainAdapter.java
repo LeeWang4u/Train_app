@@ -60,20 +60,20 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.TrainViewHol
         holder.itemView.setOnClickListener(v -> {
             if (onTrainClickListener != null) {
                 onTrainClickListener.onItemClick(trip);
-
-                TripDetailRequest tripDetailRequest = new TripDetailRequest(trip.getDepartureStation(),
-                        trip.getArrivalStation(), trip.getTripId());
-
-                // Tạo Intent để chuyển sang màn hình mới
-                Intent intent = new Intent(holder.itemView.getContext(), SelectSeatActivity.class);
-                intent.putExtra("tripDetailRequest", tripDetailRequest);
-                intent.putExtra("trip", trip);
-
-
-                Log.d("ChiTietTau", trip.getTripId() + " " + trip.getDepartureStation() + " " + trip.getDepartureStation());
-
-                // Khởi động Activity mới
-                holder.itemView.getContext().startActivity(intent);
+//
+//                TripDetailRequest tripDetailRequest = new TripDetailRequest(trip.getDepartureStation(),
+//                        trip.getArrivalStation(), trip.getTripId());
+//
+//                // Tạo Intent để chuyển sang màn hình mới
+//                Intent intent = new Intent(holder.itemView.getContext(), SelectSeatActivity.class);
+//                intent.putExtra("tripDetailRequest", tripDetailRequest);
+//                intent.putExtra("trip", trip);
+//
+//
+//                Log.d("ChiTietTau", trip.getTripId() + " " + trip.getDepartureStation() + " " + trip.getDepartureStation());
+//
+//                // Khởi động Activity mới
+//                holder.itemView.getContext().startActivity(intent);
 
 
             }
