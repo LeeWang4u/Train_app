@@ -125,6 +125,7 @@
 package com.example.train_app.adapters.recyclerView;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -147,26 +148,83 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
     public DateAdapter(Calendar month, Calendar initDate,
                        OnDateSelectedListener listener) {
         this.listener = listener;
-        this.dates = new ArrayList<>();
+        dates = new ArrayList<>();
+
+        // 1) Tính số ô trống đầu tháng để offset đúng thứ
         Calendar cal = (Calendar) month.clone();
         cal.set(Calendar.DAY_OF_MONTH, 1);
+        int firstDow = cal.get(Calendar.DAY_OF_WEEK); // CN=1, T2=2...
+        int offset = (firstDow + 5) % 7;             // Chuyển về T2=0,...,CN=6
+        for (int i = 0; i < offset; i++) {
+            dates.add(null);
+        }
 
-        int offset = (cal.get(Calendar.DAY_OF_WEEK) + 5) % 7; // Mon=0
-        for (int i = 0; i < offset; i++) dates.add(null);
+        // 2) Add các ngày thật
         int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         for (int d = 1; d <= maxDay; d++) {
             Calendar c = (Calendar) cal.clone();
             c.set(Calendar.DAY_OF_MONTH, d);
             dates.add(c.getTime());
-            if (initDate.get(Calendar.YEAR) == c.get(Calendar.YEAR)
-                    && initDate.get(Calendar.MONTH) == c.get(Calendar.MONTH)
-                    && initDate.get(Calendar.DAY_OF_MONTH) == d) {
+            // lưu vị trí selected ban đầu
+            if (initDate.get(Calendar.YEAR)  == c.get(Calendar.YEAR) &&
+                    initDate.get(Calendar.MONTH) == c.get(Calendar.MONTH) &&
+                    initDate.get(Calendar.DAY_OF_MONTH) == d) {
                 selectedPos = dates.size() - 1;
             }
         }
+
+        // 3) Điền tiếp ô trống cuối để đủ hàng
         int rows = (int) Math.ceil(dates.size() / 7.0);
-        while (dates.size() < rows * 7) dates.add(null);
+        while (dates.size() < rows * 7) {
+            dates.add(null);
+        }
     }
+
+    @Override
+    public void onBindViewHolder(@NonNull DateViewHolder holder, int pos) {
+        Date dt = dates.get(pos);
+
+        if (dt == null) {
+            // **Ô trống**: không xóa view, chỉ bỏ text & disable
+            holder.tv.setText("");
+            holder.tv.setEnabled(false);
+            // giữ nguyên background selector để vẫn thấy khung ô
+            holder.tv.setSelected(false);
+
+        } else {
+            // Ngày thật
+            Calendar day = Calendar.getInstance();
+            day.setTime(dt);
+            holder.tv.setText(String.valueOf(day.get(Calendar.DAY_OF_MONTH)));
+
+            // Past dates → gray + disable
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR_OF_DAY,0);
+            today.set(Calendar.MINUTE,0);
+            today.set(Calendar.SECOND,0);
+            today.set(Calendar.MILLISECOND,0);
+
+            boolean isPast = day.before(today);
+            holder.tv.setEnabled(!isPast);
+            holder.tv.setTextColor(holder.tv.getContext()
+                    .getResources().getColor(isPast
+                            ? android.R.color.darker_gray
+                            : android.R.color.black));
+
+            // Highlight selected
+            holder.tv.setSelected(pos == selectedPos);
+
+            holder.tv.setOnClickListener(v -> {
+                if (!holder.tv.isEnabled()) return;
+                int old = selectedPos;
+                selectedPos = holder.getAdapterPosition();
+                notifyItemChanged(old);
+                notifyItemChanged(selectedPos);
+                listener.onDateSelected(day);
+            });
+        }
+    }
+
 
     @NonNull
     @Override
@@ -176,53 +234,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
         return new DateViewHolder(tv);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull DateViewHolder holder, int position) {
-        Date date = dates.get(position);
-        if (date == null) {
-            holder.tv.setText("");
-            holder.tv.setEnabled(false);
-            holder.tv.setSelected(false);
-        } else {
-            Calendar day = Calendar.getInstance();
-            day.setTime(date);
-            holder.tv.setText(String.valueOf(day.get(Calendar.DAY_OF_MONTH)));
 
-            Calendar today = Calendar.getInstance();
-            today.set(Calendar.HOUR_OF_DAY, 0);
-            today.set(Calendar.MINUTE, 0);
-            today.set(Calendar.SECOND, 0);
-            today.set(Calendar.MILLISECOND, 0);
-
-            boolean past = day.before(today);
-            holder.tv.setEnabled(!past);
-            holder.tv.setTextColor(holder.tv.getContext()
-                    .getResources().getColor(
-                            past ? android.R.color.darker_gray : android.R.color.black));
-            holder.tv.setSelected(position == selectedPos);
-
-            holder.tv.setOnClickListener(v -> {
-                int adapterPos = holder.getAdapterPosition();
-                if (adapterPos == RecyclerView.NO_POSITION) return;
-
-                Date clickedDate = dates.get(adapterPos);
-                Calendar clickedDay = Calendar.getInstance();
-                clickedDay.setTime(clickedDate);
-                Calendar todayCheck = Calendar.getInstance();
-                todayCheck.set(Calendar.HOUR_OF_DAY,0);
-                todayCheck.set(Calendar.MINUTE,0);
-                todayCheck.set(Calendar.SECOND,0);
-                todayCheck.set(Calendar.MILLISECOND,0);
-                if (clickedDay.before(todayCheck)) return;
-
-                int old = selectedPos;
-                selectedPos = adapterPos;
-                notifyItemChanged(old);
-                notifyItemChanged(selectedPos);
-                listener.onDateSelected(clickedDay);
-            });
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -231,7 +243,6 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
 
     static class DateViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
-
         DateViewHolder(@NonNull TextView itemView) {
             super(itemView);
             tv = itemView;
