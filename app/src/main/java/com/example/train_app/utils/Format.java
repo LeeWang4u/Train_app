@@ -28,4 +28,9 @@ public class Format {
     public static String formatCompartment(int stt, String compartmentName){
         return "Toa số " + String.valueOf(stt) + " - "+ compartmentName;
     }
+
+
+    public static String formatLabel(String departureStation, String arrivalStation,String departureTime,String trainName){
+        return departureStation + " - " + arrivalStation + "  " + departureTime +"  " + trainName ;
+    }
 }

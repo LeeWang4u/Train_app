@@ -22,6 +22,7 @@ import com.example.train_app.dto.response.BookingResponse;
 import com.example.train_app.dto.response.CarriageAvailabilityResponseDTO;
 import com.example.train_app.dto.response.SeatAvailabilityResponseDTO;
 import com.example.train_app.dto.response.TicketResponseDTO;
+import com.example.train_app.utils.CurrentTrip;
 import com.example.train_app.utils.Format;
 import com.example.train_app.utils.ReservationSeat;
 
@@ -139,7 +140,8 @@ public class CoachSeatFragment extends Fragment {
         seatView.setOnClickListener(v -> {
             background.setBackgroundResource(R.drawable.bg_seat_available);
             ReservationSeat.removeSeat(selectSeatReqDTO);
-            TicketReservationReqDTO ticketReservationReqDTO = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), "Hà Nội", "Sài Gòn", 19);
+            TicketReservationReqDTO ticketReservationReqDTO = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), CurrentTrip.getCurrentTrip().getDepartureStation(), CurrentTrip.getCurrentTrip().getArrivalStation(), CurrentTrip.getCurrentTrip().getTripId());
+
             ApiService apiService = HTTPService.getInstance().create(ApiService.class);
             Call<BookingResponse> call = apiService.deleteReserve(ticketReservationReqDTO);
             call.enqueue(new Callback<BookingResponse>() {

@@ -17,12 +17,14 @@ import com.example.train_app.R;
 import com.example.train_app.activities.SelectSeatActivity;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
+import com.example.train_app.dto.request.CustomerDTO;
 import com.example.train_app.dto.request.SelectSeatReqDTO;
 import com.example.train_app.dto.request.TicketReservationReqDTO;
 import com.example.train_app.dto.response.BookingResponse;
 import com.example.train_app.dto.response.CarriageAvailabilityResponseDTO;
 import com.example.train_app.dto.response.SeatAvailabilityResponseDTO;
 import com.example.train_app.dto.response.TicketResponseDTO;
+import com.example.train_app.utils.CurrentTrip;
 import com.example.train_app.utils.Format;
 import com.example.train_app.utils.ReservationSeat;
 
@@ -182,7 +184,7 @@ public class Coach4BedsFragment extends Fragment {
         seatView.setOnClickListener(v -> {
             indicator.setBackgroundResource(R.drawable.bg_seat_available);
             ReservationSeat.removeSeat(selectSeatReqDTO);
-            TicketReservationReqDTO ticketReservationReqDTO = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), "Hà Nội", "Sài Gòn", 19);
+            TicketReservationReqDTO ticketReservationReqDTO = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), CurrentTrip.getCurrentTrip().getDepartureStation(), CurrentTrip.getCurrentTrip().getArrivalStation(), CurrentTrip.getCurrentTrip().getTripId());
             ApiService apiService = HTTPService.getInstance().create(ApiService.class);
             Call<BookingResponse> call = apiService.deleteReserve(ticketReservationReqDTO);
             call.enqueue(new Callback<BookingResponse>() {

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -30,6 +31,7 @@ import com.example.train_app.fragment.Coach4BedsFragment;
 import com.example.train_app.fragment.Coach6BedsFragment;
 import com.example.train_app.fragment.CoachSeatFragment;
 import com.example.train_app.model.Trip;
+import com.example.train_app.utils.CurrentTrip;
 import com.example.train_app.utils.Format;
 import com.example.train_app.utils.ReservationSeat;
 
@@ -47,12 +49,18 @@ public class SelectSeatActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ScrollView scrollView;
     private Button continueButton;
-    private TextView progressText;
+    private TextView progressText , label;
 
     private LinearLayout summaryContainer;
     private TextView tvSeatCount;
     private TextView tvTotalAmount;
     private Button btnDetail;
+     private ImageButton btnBack ;
+
+    private TripDetailRequest tripDetailRequest;
+
+    private Trip trip;
+    private List<CarriageAvailabilityResponseDTO> cachedCoachList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,24 +77,30 @@ public class SelectSeatActivity extends AppCompatActivity {
         tvSeatCount = findViewById(R.id.tv_seat_count);
         tvTotalAmount = findViewById(R.id.tv_total_amount);
         btnDetail = findViewById(R.id.btn_detail);
+        btnBack = findViewById(R.id.btn_back);
+        label = findViewById(R.id.label);
+
 
         continueButton.setVisibility(View.GONE);
 //
-       Intent intent = getIntent();
-        TripDetailRequest tripDetailRequest = (TripDetailRequest) intent.getSerializableExtra("tripDetailRequest");
-      Trip trip = (Trip) intent.getSerializableExtra("trip");
-        TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(tripDetailRequest.getIdTrip(),tripDetailRequest.getDepartureStation(),tripDetailRequest.getArrivalStation());
+        Intent intent = getIntent();
+         tripDetailRequest = (TripDetailRequest) intent.getSerializableExtra("tripDetailRequest");
+         trip = (Trip) intent.getSerializableExtra("trip");
+        CurrentTrip.setTrip(trip);
+
+        Log.d("API_SUCCESS", "Số lượng toa tàu: " + tripDetailRequest.getDepartureStation()+ " - "+ tripDetailRequest.getArrivalStation());
+        TripSeatRequestDTO tripSeatRequestDTO = new TripSeatRequestDTO(tripDetailRequest.getIdTrip(),tripDetailRequest.getArrivalStation(),tripDetailRequest.getDepartureStation());
             ApiService apiService = HTTPService.getInstance().create(ApiService.class);
             Call<TripAvailabilityResponseDTO> call = apiService.getCarriagesAndSeat(tripSeatRequestDTO);
-
+            label.setText(Format.formatLabel(trip.getDepartureStation(),trip.getArrivalStation(),trip.getDepartureTime(),trip.getTrainName()));
             call.enqueue(new Callback<TripAvailabilityResponseDTO>() {
                 @Override
                 public void onResponse(Call<TripAvailabilityResponseDTO> call, Response<TripAvailabilityResponseDTO> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         List<CarriageAvailabilityResponseDTO> coachList = response.body().getCarriages();
                         Log.d("API_SUCCESS", "Số lượng toa tàu: " + coachList.size());
-
-                        loadFragments(coachList);
+                        cachedCoachList = coachList;
+                        loadFragments(cachedCoachList);
 
                         progressBar.setVisibility(View.GONE);
                         progressText.setVisibility(View.GONE);
@@ -120,6 +134,10 @@ public class SelectSeatActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(SelectSeatActivity.this, "Vui lòng chọn ghế trước khi thanh toán", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        btnBack.setOnClickListener(v -> {
+            finish();  // Kết thúc Activity hiện tại và quay lại màn hình trước
         });
 
         btnDetail.setOnClickListener(v -> {
@@ -179,6 +197,16 @@ public class SelectSeatActivity extends AppCompatActivity {
 
             tvSeatCount.setText(seatCount + " Ghế");
             tvTotalAmount.setText(Format.formatPriceToVnd(ReservationSeat.getTotalPrice()));
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (cachedCoachList != null && !cachedCoachList.isEmpty()) {
+            fragmentContainer.removeAllViews();
+            loadFragments(cachedCoachList);
+            updateSummary();
         }
     }
 

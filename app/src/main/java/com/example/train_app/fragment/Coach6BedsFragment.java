@@ -23,6 +23,7 @@ import com.example.train_app.dto.response.BookingResponse;
 import com.example.train_app.dto.response.CarriageAvailabilityResponseDTO;
 import com.example.train_app.dto.response.SeatAvailabilityResponseDTO;
 import com.example.train_app.dto.response.TicketResponseDTO;
+import com.example.train_app.utils.CurrentTrip;
 import com.example.train_app.utils.Format;
 import com.example.train_app.utils.ReservationSeat;
 
@@ -153,7 +154,8 @@ public class Coach6BedsFragment extends Fragment {
             if (ReservationSeat.sumSelectedSeat() < 5) {
                 indicator.setBackgroundResource(R.drawable.bg_seat_selected);
 
-                TicketReservationReqDTO ticketReservation = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), "Hà Nội", "Sài Gòn", 19);
+                TicketReservationReqDTO ticketReservation= new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), CurrentTrip.getCurrentTrip().getDepartureStation(), CurrentTrip.getCurrentTrip().getArrivalStation(), CurrentTrip.getCurrentTrip().getTripId());
+
                 ApiService apiService = HTTPService.getInstance().create(ApiService.class);
                 Call<TicketResponseDTO> callReserve = apiService.reserveTicket(ticketReservation);
                 callReserve.enqueue(new Callback<TicketResponseDTO>() {
