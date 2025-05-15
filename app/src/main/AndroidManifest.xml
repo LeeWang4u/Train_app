@@ -34,6 +34,7 @@
         <activity android:name=".activities.SelectSeatActivity"/>
         <activity android:name=".activities.TrainSearchResultActivity"/>
         <activity android:name=".activities.SeatDetailActivity"/>
+        <activity android:name=".activities.CheckTicketActivity"/>
 <!--        <activity android:name=".MainActivity" />-->
 
 
