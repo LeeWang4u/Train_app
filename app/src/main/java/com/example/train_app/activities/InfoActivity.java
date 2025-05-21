@@ -4,6 +4,7 @@ import static android.app.ProgressDialog.show;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,13 +24,16 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.train_app.R;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
+import com.example.train_app.api.MomoRetrofit;
 import com.example.train_app.container.request.TripDetailRequest;
 import com.example.train_app.dto.request.CustomerDTO;
+import com.example.train_app.dto.request.PaymentRequest;
 import com.example.train_app.dto.request.ReservationCodeRequestDTO;
 import com.example.train_app.dto.request.SelectSeatReqDTO;
 import com.example.train_app.dto.request.TicketRequestDTO;
 import com.example.train_app.dto.request.TicketReservationReqDTO;
 import com.example.train_app.dto.response.BookingResponse;
+import com.example.train_app.dto.response.PaymentResponse;
 import com.example.train_app.fragment.TicketInfoFragment;
 import com.example.train_app.payment.MomoPaymentHandler;
 import com.example.train_app.utils.CurrentTrip;
@@ -39,6 +43,7 @@ import com.example.train_app.utils.ReservationSeat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,10 +62,13 @@ public class InfoActivity extends AppCompatActivity {
     private EditText inputFullName, inputIdNumber, inputPhone,inputEmail;
 
     private TextView textTotalPrice;
-    private Button btnPayment;
+    private Button btnPaymentOnline;
+    private Button btnPaymentOffline;
+
     private ImageButton btnBack;
 
     private ReservationCodeRequestDTO reservationCodeRequestDTO;
+    private CustomerDTO customerDTO;
 
 
     @Override
@@ -75,7 +83,8 @@ public class InfoActivity extends AppCompatActivity {
         inputEmail  =findViewById(R.id.input_email);
         inputIdNumber = findViewById(R.id.input_CCCD);
         inputPhone = findViewById(R.id.input_phone);
-        btnPayment = findViewById(R.id.btn_payment);
+        btnPaymentOnline = findViewById(R.id.button_payment_online);
+        btnPaymentOffline = findViewById(R.id.button_payment_offline);
         btnBack = findViewById(R.id.btn_back);
         textTotalPrice = findViewById(R.id.text_total_price);
 
@@ -138,13 +147,25 @@ public class InfoActivity extends AppCompatActivity {
         });
 
         // Xử lý nút Xác nhận
-        btnPayment.setOnClickListener(v -> {
+        btnPaymentOnline.setOnClickListener(v -> {
             new AlertDialog.Builder(InfoActivity.this)
                     .setTitle("Xác nhận thanh toán")
                     .setMessage("Bạn có chắc muốn thanh toán không?")
                     .setPositiveButton("Có", (dialog, which) -> {
-                        // Nếu OK → gọi API confirmTicket
                         callConfirmTicketApi();
+                        handleMomo();
+                    })
+                    .setNegativeButton("Không", null)
+                    .show();
+        });
+
+        btnPaymentOffline.setOnClickListener(v -> {
+            new AlertDialog.Builder(InfoActivity.this)
+                    .setTitle("Xác nhận thanh toán")
+                    .setMessage("Bạn có chắc muốn thanh toán không?" +"\n"+  "Vui lòng đến quầy trước 30 phút để thanh toán")
+                    .setPositiveButton("Đồng ý", (dialog, which) -> {
+                        callConfirmTicketApi();
+                        handleCallConfirmTicket();
                     })
                     .setNegativeButton("Không", null)
                     .show();
@@ -152,7 +173,7 @@ public class InfoActivity extends AppCompatActivity {
     }
     private void callConfirmTicketApi() {
         // Giả sử bạn có mã đặt vé lấy từ input hoặc Intent
-        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO = new CustomerDTO();
         customerDTO.setFullName(inputFullName.getText().toString().trim());
         customerDTO.setEmail(inputEmail.getText().toString().trim());
         customerDTO.setCccd(inputIdNumber.getText().toString().trim());
@@ -162,32 +183,50 @@ public class InfoActivity extends AppCompatActivity {
         List<TicketRequestDTO> ticketRequestDTO = new ArrayList<>();
         FragmentManager fm = getSupportFragmentManager();
         List<Fragment> fragments = fm.getFragments();
-        for(Fragment frag:fragments){
-            if(frag instanceof TicketInfoFragment) {
+        for (Fragment frag : fragments) {
+            if (frag instanceof TicketInfoFragment) {
                 TicketRequestDTO ticket = ((TicketInfoFragment) frag).getTicketInfo();
-                if(ticket!=null){
+                if (ticket != null) {
                     ticketRequestDTO.add(ticket);
                 }
             }
         }
         reservationCodeRequestDTO.setTicketRequestDTO(ticketRequestDTO);
-        MomoPaymentHandler momoHandler = new MomoPaymentHandler();
-        momoHandler.requestPayment(this, customerDTO, new MomoPaymentHandler.MomoPaymentCallback() {
+    }
+    private void handleMomo(){
+        String customerName = customerDTO.getFullName(); // Get from user input or data
+        BigDecimal amount = ReservationSeat.getFinalTotalPrice(); // Example amount in VND, replace with actual value
+
+        PaymentRequest request = new PaymentRequest(customerName, amount);
+        ApiService apiService = MomoRetrofit.getApiService();
+
+        apiService.createPayment(request).enqueue(new Callback<PaymentResponse>() {
             @Override
-            public void onSuccess(String token, String phoneNumber) {
-                // Gửi token về server để xác nhận thanh toán
+            public void onResponse(Call<PaymentResponse> call, Response<PaymentResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String payUrl = response.body().getPayUrl();
+                    Log.d("PayUrl","payurl:"+ payUrl);
+                    if (payUrl != null && !payUrl.isEmpty()) {
+                        handleCallConfirmTicket();
+                        // Start PaymentActivity with the payment URL
+                        Intent intent = new Intent(InfoActivity.this, PaymentActivity.class);
+                        intent.putExtra("payment_url", payUrl);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(InfoActivity.this, "Failed to get payment URL", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(InfoActivity.this, "Payment request failed", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onFailure(String message) {
-                Toast.makeText(InfoActivity.this, "Thanh toán thất bại: " + message, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(InfoActivity.this, "Đã huỷ thanh toán", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<PaymentResponse> call, Throwable t) {
+                Toast.makeText(InfoActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void handleCallConfirmTicket(){
         ApiService api = HTTPService
                 .getInstance()
                 .create(ApiService.class);

@@ -36,7 +36,19 @@
         <activity android:name=".activities.SeatDetailActivity"/>
         <activity android:name=".activities.CheckTicketActivity"/>
 <!--        <activity android:name=".MainActivity" />-->
-
+        <activity
+            android:name=".activities.PaymentActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="app_name"
+                    android:host="payment-success" />
+            </intent-filter>
+        </activity>
 
     </application>
 

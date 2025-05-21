@@ -16,10 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import vn.momo.momo_partner.AppMoMoLib;
+import vn.momo.momo_partner.MoMoParameterNameMap;
 
 public class MomoPaymentHandler {
-    private String merchantName = "HoangNgoc";
-    private String merchantCode = "MOMOC2IC20220501";
+    private String merchantName = "MoMo Test";
+    private String merchantCode = "MOMO0HGO20210729";
     private String description = "Thanh toán đặt vé tàu online";
 
     public interface MomoPaymentCallback {

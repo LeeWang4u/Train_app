@@ -144,12 +144,39 @@
                     android:hint="Số điện thoại"
                     android:inputType="phone" />
 
-                <Button
-                    android:id="@+id/btn_payment"
+
+
+                <!-- Hai nút chọn hình thức thanh toán đặt cạnh nhau -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thanh Toán"
-                    android:layout_marginTop="12dp" />
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/button_payment_online"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Thanh toán online"
+                        android:textColor="#FFFFFF"
+                        android:background="#4CAF50"
+                        android:layout_marginEnd="8dp"/>
+
+                    <Button
+                        android:id="@+id/button_payment_offline"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Thanh toán offline"
+                        android:textColor="#FFFFFF"
+                        android:background="#FF9800"
+                        android:layout_marginStart="8dp"/>
+                </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -1,7 +1,9 @@
 package com.example.train_app.api;
 
 
+import com.example.train_app.dto.request.PaymentRequest;
 import com.example.train_app.dto.request.TripSeatRequestDTO;
+import com.example.train_app.dto.response.PaymentResponse;
 import com.example.train_app.dto.response.SearchTicketResponse;
 import com.example.train_app.dto.response.Ticket;
 import com.example.train_app.dto.response.TripAvailabilityResponseDTO;
@@ -50,4 +52,7 @@ public interface ApiService {
 
     @GET("tickets/searchTicketByReservationCodeAndroid")
     Call<List<SearchTicketResponse>> searchTicketByReservationCodeAndroid(@Query("reservationCode") int reservationCode);
+
+    @POST("/payment")
+    Call<PaymentResponse> createPayment(@Body PaymentRequest request);
 }
