@@ -2,5 +2,11 @@
 <resources>
     <attr name="textColorBlackLight" format="color"/>
     <attr name="backgroundColorTextLight" format="color"/>
+    <attr name="colorBackground" format="color"/>
+    <attr name="textColorPrimary" format="color"/>
+    <attr name="textColorHint" format="color"/>
+    <attr name="colorForeground" format="color"/>
+    <attr name="selectStationBackground" format="color"/>
+
 </resources>
 

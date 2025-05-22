@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn ga đi"
-        android:backgroundTint="?android:attr/backgroundColorTextLight"
+        android:backgroundTint="@color/backgroundColorTextLight"
         android:textColor="@color/textColorBlackLight"
         android:layout_marginTop="8dp" />
 
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn ga đến"
-        android:backgroundTint="#E0E0E0"
+        android:backgroundTint="@color/backgroundColorTextLight"
         android:textColor="@color/textColorBlackLight"
         android:layout_marginTop="8dp" />
 
@@ -78,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn ngày đi"
-        android:backgroundTint="#E0E0E0"
+        android:backgroundTint="@color/backgroundColorTextLight"
         android:textColor="@color/textColorBlackLight"
         android:layout_marginTop="8dp" />
 

@@ -11,6 +11,15 @@
         <item name="android:textColorPrimary">@color/lightText</item>
         <item name="textColorBlackLight">@color/textColorBlackLight</item>
         <item name="backgroundColorTextLight">@color/backgroundColorTextLight</item>
+
+        <item name="selectStationBackground">@color/selectStationBackground</item>
+
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="textColorPrimary">@color/textColorPrimary</item>
+        <item name="textColorHint">@color/textColorHint</item>
+        <item name="colorForeground">@color/colorForeground</item>
+        <item name="divider">@color/dividerColor</item>
+        <item name="editTextBackground">@color/editTextBackground</item>
     </style>
 
 <!--    <color name="colorPrimary">#2196F3</color>-->

@@ -6,8 +6,25 @@
     <color name="base">#6439E6</color>
     <color name="baseBackground">#2196F3</color>
 
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="lightBackground">#FFFFFF</color>
+    <color name="darkText">#212121</color>
+
     <color name="textColorBlackLight">#000000</color>
-    <color name="backgroundColorTextLight">#FFFFFF</color>
+    <color name="backgroundColorTextLight">#E0E0E0</color>
+
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="textColorPrimary">#000000</color>
+    <color name="textColorHint">#757575</color>
+    <color name="colorForeground">#FFFFFF</color>
+    <color name="dividerColor">#B0B0B0</color>
+    <color name="editTextBackground">#F5F5F5</color>
+
+    <color name="selectStationBackground">#FFFFFF</color>
+<!--    <color name="inputSelectStationBackground">@color/edit_text_background</color>-->
+
 
     <color name="darkBackground">#212121</color>
     <color name="lightText">#FFFFFF</color>
