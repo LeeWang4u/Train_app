@@ -16,12 +16,16 @@
         android:layout_marginBottom="16dp" />
 
     <!-- Header Image (Placeholder for banner) -->
-    <ImageView
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:src="@drawable/he_thong_duong_sat_viet_nam"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:contentDescription="Banner Image" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@drawable/he_thong_duong_sat_viet_nam"
-        android:scaleType="centerCrop"
-        android:contentDescription="Banner Image" />
+        android:layout_height="200dp" />
 
     <!-- Departure Station -->
     <TextView
