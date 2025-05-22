@@ -1,7 +1,11 @@
 package com.example.train_app.api;
 
 
+import com.example.train_app.dto.request.PaymentRequest;
 import com.example.train_app.dto.request.TripSeatRequestDTO;
+import com.example.train_app.dto.response.PaymentResponse;
+import com.example.train_app.dto.response.SearchTicketResponse;
+import com.example.train_app.dto.response.Ticket;
 import com.example.train_app.dto.response.TripAvailabilityResponseDTO;
 import com.example.train_app.container.request.TripRequest;
 import com.example.train_app.model.Station;
@@ -10,6 +14,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
+
 import com.example.train_app.dto.request.ReservationCodeRequestDTO;
 import com.example.train_app.dto.request.TicketReservationReqDTO;
 import com.example.train_app.dto.response.TicketType;
@@ -41,4 +47,12 @@ public interface ApiService {
     @POST("carriages/seats")
     Call<TripAvailabilityResponseDTO> getCarriagesAndSeat(@Body TripSeatRequestDTO tripSeatRequestDTO);
 
+    @GET("tickets/searchTicketByIdAndroid")
+    Call<SearchTicketResponse> searchTicketById(@Query("ticketId") int ticketId);
+
+    @GET("tickets/searchTicketByReservationCodeAndroid")
+    Call<List<SearchTicketResponse>> searchTicketByReservationCodeAndroid(@Query("reservationCode") int reservationCode);
+
+    @POST("/payment")
+    Call<PaymentResponse> createPayment(@Body PaymentRequest request);
 }

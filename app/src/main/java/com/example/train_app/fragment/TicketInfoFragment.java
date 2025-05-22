@@ -1,12 +1,15 @@
 package com.example.train_app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -18,11 +21,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.train_app.R;
+import com.example.train_app.activities.SeatDetailActivity;
+import com.example.train_app.activities.SelectSeatActivity;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
 import com.example.train_app.dto.request.SelectSeatReqDTO;
 import com.example.train_app.dto.request.TicketRequestDTO;
+import com.example.train_app.dto.request.TicketReservationReqDTO;
+import com.example.train_app.dto.response.BookingResponse;
 import com.example.train_app.dto.response.TicketType;
+import com.example.train_app.utils.CurrentTrip;
 import com.example.train_app.utils.Format;
 import com.example.train_app.utils.ReservationSeat;
 
@@ -42,7 +50,7 @@ public class TicketInfoFragment extends Fragment {
 
     private TextView textSeat;
 
-    private TextView textDeparture;
+    private TextView textDeparture , textDepartureTime;
 
     private EditText inputFullName, inputCCCD;
 
@@ -51,6 +59,8 @@ public class TicketInfoFragment extends Fragment {
     private TicketType selectedType;
 
     private BigDecimal finalPrice;
+
+    private Button btnDelete;
 
 
     public interface OnTicketPriceChangeListener {
@@ -85,11 +95,14 @@ public class TicketInfoFragment extends Fragment {
         textSeat = view.findViewById(R.id.text_seat);
         textDeparture = view.findViewById(R.id.text_departure);
         textPrice = view.findViewById(R.id.text_ticket_price);
+        textDepartureTime = view.findViewById((R.id.text_time));
+        btnDelete = view.findViewById(R.id.btn_cancel_ticket);
         SelectSeatReqDTO seat = (SelectSeatReqDTO) getArguments().getSerializable("seat_data");
             if (seat != null) {
                 textSeat.setText(Format.formatCompartment(seat.getStt(),seat.getSeatName()));
                 textDeparture.setText(seat.getTicketResponseDTO().getDepartureStation()+" - "+ seat.getTicketResponseDTO().getArrivalStation());
                 textPrice.setText(Format.formatPriceToVnd(seat.getTicketPrice()));
+                textDepartureTime.setText(CurrentTrip.getCurrentTrip().getDepartureTime());
             }
         // Hiển thị ProgressBar khi đang tải dữ liệu
         progressBar.setVisibility(View.VISIBLE);
@@ -151,6 +164,38 @@ public class TicketInfoFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(requireContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        });
+
+        btnDelete.setOnClickListener(v->{
+            ReservationSeat.removeSeat(seat);
+            TicketReservationReqDTO ticketReservationReqDTO = new TicketReservationReqDTO(seat.getSeatId(), CurrentTrip.getCurrentTrip().getDepartureStation(),CurrentTrip.getCurrentTrip().getArrivalStation(),CurrentTrip.getCurrentTrip().getTripId());
+
+            Call<BookingResponse> callDelete = apiService.deleteReserve(ticketReservationReqDTO);
+            callDelete.enqueue(new Callback<BookingResponse>() {
+                @Override
+                public void onResponse(Call<BookingResponse> callDelete, Response<BookingResponse> response) {
+                    if (response.isSuccessful()) {
+
+                        BookingResponse bookingResponse = response.body();
+                        Log.d("Reserve", "Hủy giữ chỗ thành công!" + bookingResponse.getStatus());
+
+
+                    } else {
+                        Log.e("Reserve", "Lỗi hủy giữ chỗ : " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BookingResponse> callDelete, Throwable t) {
+                    Log.e("Reserve", "Lỗi kết nối API", t);
+                }
+            });
+            requireActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(TicketInfoFragment.this)
+                    .commit();
+
         });
     }
 

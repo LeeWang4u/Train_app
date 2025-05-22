@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,9 +19,11 @@ import com.example.train_app.MainActivity;
 import com.example.train_app.R;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
+import com.example.train_app.container.request.TripDetailRequest;
 import com.example.train_app.dto.request.SelectSeatReqDTO;
 import com.example.train_app.dto.request.TicketReservationReqDTO;
 import com.example.train_app.dto.response.BookingResponse;
+import com.example.train_app.utils.CurrentTrip;
 import com.example.train_app.utils.Format;
 import com.example.train_app.utils.ReservationSeat;
 
@@ -32,8 +35,9 @@ import retrofit2.Response;
 public class SeatDetailActivity extends AppCompatActivity {
 
     private LinearLayout seatContainer;
-    private TextView textViewTotalAmount;
+    private TextView textViewTotalAmount , label;
     private Button buttonThanhToan;
+    private ImageButton btnBack;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,9 @@ public class SeatDetailActivity extends AppCompatActivity {
             seatContainer       = findViewById(R.id.seat_container);
             textViewTotalAmount = findViewById(R.id.text_view_total_amount);
             buttonThanhToan      = findViewById(R.id.button_thanh_toan);
+            btnBack = findViewById(R.id.btn_back);
+            label = findViewById(R.id.label);
+            label.setText(Format.formatLabel(CurrentTrip.getCurrentTrip().getDepartureStation(),CurrentTrip.getCurrentTrip().getArrivalStation(),CurrentTrip.getCurrentTrip().getDepartureTime(),CurrentTrip.getCurrentTrip().getTrainName()));
             LayoutInflater inflater = getLayoutInflater();
             for(SelectSeatReqDTO seat: ReservationSeat.getSelectedSeats()){
                 View item = inflater.inflate(R.layout.item_seat_detail,seatContainer,false);
@@ -49,6 +56,7 @@ public class SeatDetailActivity extends AppCompatActivity {
                 TextView tvCoachSeat = item.findViewById(R.id.textViewCoachAndSeat);
                 TextView tvPrice     = item.findViewById(R.id.textViewPrice);
                 Button   btnDelete   = item.findViewById(R.id.buttonDelete);
+
                 tvType.setText(seat.getCompartmentName());
                 tvCoachSeat.setText(Format.formatCompartment(seat.getStt(),seat.getSeatName()));
                 tvPrice.setText(Format.formatPriceToVnd(seat.getTicketPrice()));
@@ -56,7 +64,7 @@ public class SeatDetailActivity extends AppCompatActivity {
                 btnDelete.setOnClickListener(v->{
                     ReservationSeat.removeSeat(seat);
                     seatContainer.removeView(item);
-                    TicketReservationReqDTO ticketReservationReqDTO = new TicketReservationReqDTO(seat.getSeatId(), "Hà Nội", "Sài Gòn", 19);
+                    TicketReservationReqDTO ticketReservationReqDTO = new TicketReservationReqDTO(seat.getSeatId(), CurrentTrip.getCurrentTrip().getDepartureStation(),CurrentTrip.getCurrentTrip().getArrivalStation(),CurrentTrip.getCurrentTrip().getTripId());
                     ApiService apiService = HTTPService.getInstance().create(ApiService.class);
                     Call<BookingResponse> call = apiService.deleteReserve(ticketReservationReqDTO);
                     call.enqueue(new Callback<BookingResponse>() {
@@ -79,8 +87,12 @@ public class SeatDetailActivity extends AppCompatActivity {
                         }
                     });
                     if(ReservationSeat.sumSelectedSeat()<1){
-                        Intent intent = new Intent(SeatDetailActivity.this, SelectSeatActivity.class);
-                        startActivity(intent);
+//                        TripDetailRequest tripDetailRequest = new TripDetailRequest(CurrentTrip.getCurrentTrip().getArrivalStation(),CurrentTrip.getCurrentTrip().getDepartureStation(), CurrentTrip.getCurrentTrip().getTripId());
+//                        Intent intent = new Intent(SeatDetailActivity.this, SelectSeatActivity.class);
+//                        intent.putExtra("tripDetailRequest",tripDetailRequest);
+//                        intent.putExtra("trip",CurrentTrip.getCurrentTrip());
+//                        startActivity(intent);
+                        finish();
                     }
 
                 });
@@ -92,8 +104,18 @@ public class SeatDetailActivity extends AppCompatActivity {
             textViewTotalAmount.setText(Format.formatPriceToVnd(ReservationSeat.getTotalPrice()));
 
             buttonThanhToan.setOnClickListener(v -> {
-                // TODO: chèn logic thanh toán ở đây
-                Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(SeatDetailActivity.this, InfoActivity.class);
+                startActivity(in);
+            });
+
+            btnBack.setOnClickListener(v->{
+//                TripDetailRequest tripDetailRequest = new TripDetailRequest(CurrentTrip.getCurrentTrip().getArrivalStation(),CurrentTrip.getCurrentTrip().getDepartureStation(), CurrentTrip.getCurrentTrip().getTripId());
+//                Intent intent = new Intent(SeatDetailActivity.this, SelectSeatActivity.class);
+//                intent.putExtra("tripDetailRequest",tripDetailRequest);
+//                intent.putExtra("trip",CurrentTrip.getCurrentTrip());
+//                startActivity(intent);
+                finish();
+
             });
         }
 

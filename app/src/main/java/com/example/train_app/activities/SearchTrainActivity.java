@@ -11,10 +11,13 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.train_app.MainActivity;
 import com.example.train_app.R;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
 import com.example.train_app.container.request.TripRequest;
+import com.example.train_app.dto.request.TripSeatRequestDTO;
 import com.example.train_app.model.Station;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,7 +28,7 @@ import retrofit2.Response;
 
 public class SearchTrainActivity extends AppCompatActivity {
 
-    private Button btnDepartureStation, btnArrivalStation, btnDepartureDate, btnSearchTrain;
+    private Button btnDepartureStation, btnArrivalStation, btnDepartureDate, btnSearchTrain, btnCheckTicket;
     private String selectedDepartureStation, selectedArrivalStation, selectedDate;
     private List<String> stationNames = new ArrayList<>();
 
@@ -42,7 +45,7 @@ public class SearchTrainActivity extends AppCompatActivity {
         btnArrivalStation = findViewById(R.id.btnArrivalStation);
         btnDepartureDate = findViewById(R.id.btnDepartureDate);
         btnSearchTrain = findViewById(R.id.btnSearchTrain);
-
+        btnCheckTicket = findViewById(R.id.btnCheckTicket);
         departureStationLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -123,6 +126,15 @@ public class SearchTrainActivity extends AppCompatActivity {
                 }
             }
         });
+        btnCheckTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Khi nút được nhấn, mở SecondActivity
+                Intent intent = new Intent(SearchTrainActivity.this, CheckTicketActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void fetchStations() {
