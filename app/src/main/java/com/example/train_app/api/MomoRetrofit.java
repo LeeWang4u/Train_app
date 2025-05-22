@@ -1,27 +1,19 @@
 package com.example.train_app.api;
 
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HTTPService {
-
-
-//    public static final String APP_PATH = "http://192.168.1.37:8080/api/";
-
-
-    public static final String APP_PATH = "http://192.168.88.59:8080/api/";
-
+public class MomoRetrofit {
     private static Retrofit retrofit;
+    private static final String BASE_URL = "http://192.168.88.59:5000/"; // Use 10.0.2.2 for localhost on Android emulator
 
-    public static Retrofit getInstance() {
+    public static ApiService getApiService() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(APP_PATH)
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofit;
+        return retrofit.create(ApiService.class);
     }
-
 }

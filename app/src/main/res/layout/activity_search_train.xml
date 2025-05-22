@@ -78,4 +78,13 @@
         android:textColor="#FFFFFF"
         android:layout_marginTop="24dp" />
 
+    <Button
+        android:id="@+id/btnCheckTicket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tra cứu vé"
+        android:textSize="20sp"
+        android:backgroundTint="#2196F3"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="24dp" />
 </LinearLayout>

@@ -18,6 +18,9 @@ public class Trip implements Serializable {
     private int availableSeats;
     // Constructor
 
+    public Trip() {
+    }
+
     public Trip(int tripId, String trainName, BigDecimal basePrice, String tripDate,
                 String tripStatus, String departureStation, String arrivalStation,
                 String departureTime, String arrivalTime, int availableSeats) {
