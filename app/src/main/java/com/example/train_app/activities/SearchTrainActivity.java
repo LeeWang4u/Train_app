@@ -5,19 +5,25 @@ import static com.example.train_app.helper.Format.formatDateToDashYMD;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.train_app.MainActivity;
 import com.example.train_app.R;
+import com.example.train_app.adapters.recyclerView.RouteAdapter;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
 import com.example.train_app.container.request.TripRequest;
 import com.example.train_app.dto.request.TripSeatRequestDTO;
+import com.example.train_app.dto.response.RouteBasedTicketCountResponse;
 import com.example.train_app.model.Station;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,10 +42,27 @@ public class SearchTrainActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> arrivalStationLauncher;
     private ActivityResultLauncher<Intent> dateLauncher;
 
+    //Tao
+    private RecyclerView recyclerView;
+    private RouteAdapter adapter;
+    private LinearLayoutManager layoutManager;
+    private Handler handler = new Handler();
+    private int currentPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_train);
+
+        //tao
+        recyclerView = findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+//        List<RouteBasedTicketCountResponse> routes = fetchTicketCountByRoutes();
+//        adapter = new RouteAdapter(routes);
+//        recyclerView.setAdapter(adapter);
+//        startAutoScroll(routes.size());
 
         btnDepartureStation = findViewById(R.id.btnDepartureStation);
         btnArrivalStation = findViewById(R.id.btnArrivalStation);
@@ -135,6 +158,51 @@ public class SearchTrainActivity extends AppCompatActivity {
             }
         });
 
+        fetchTicketCountByRoutes();
+    }
+
+    //tao
+    private void startAutoScroll(int size) {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                currentPosition = (currentPosition + 1) % size;
+                recyclerView.smoothScrollToPosition(currentPosition);
+                handler.postDelayed(this, 10000); // 10 seconds
+            }
+        }, 10000);
+    }
+
+    private void fetchTicketCountByRoutes(){
+        ApiService apiService = HTTPService.getInstance().create(ApiService.class);
+        Call<List<RouteBasedTicketCountResponse>> call = apiService.getTicketCountByRoutes();
+        call.enqueue(new Callback<List<RouteBasedTicketCountResponse>>() {
+            @Override
+            public void onResponse(Call<List<RouteBasedTicketCountResponse>> call, Response<List<RouteBasedTicketCountResponse>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<RouteBasedTicketCountResponse> routeList = response.body();
+                    Log.d("Routes", "Routes come here ...");
+                    List<RouteBasedTicketCountResponse> routes = new ArrayList<>();
+                    for (int i = 0; i < routeList.size(); i++) {
+                        RouteBasedTicketCountResponse item = routeList.get(i);
+                        String rank = String.valueOf(i + 1);
+                        routes.add(new RouteBasedTicketCountResponse(item.getFrom(), item.getTo(), item.getTicketsCount()));
+                    }
+
+                    runOnUiThread(() -> {
+                        adapter = new RouteAdapter(routes);
+                        recyclerView.setAdapter(adapter);
+                        startAutoScroll(routes.size());
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RouteBasedTicketCountResponse>> call, Throwable t) {
+                Log.e("API_ERROR", "Failed to fetch routes", t);
+                Toast.makeText(SearchTrainActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void fetchStations() {
