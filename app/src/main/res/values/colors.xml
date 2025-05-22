@@ -6,4 +6,11 @@
     <color name="base">#6439E6</color>
     <color name="baseBackground">#2196F3</color>
 
+    <color name="textColorBlackLight">#000000</color>
+    <color name="backgroundColorTextLight">#FFFFFF</color>
+
+    <color name="darkBackground">#212121</color>
+    <color name="lightText">#FFFFFF</color>
+<!--    <color name="colorAccent">#FF4081</color>-->
+
 </resources>
