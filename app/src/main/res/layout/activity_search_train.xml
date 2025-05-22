@@ -3,7 +3,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#F5F5F5">
+
+    >
+
+    <Button
+        android:id="@+id/btnToggleTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chuyển đổi Theme"
+        android:backgroundTint="?colorAccent"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="16dp" />
 
     <!-- Header Image (Placeholder for banner) -->
 <!--    <ImageView-->
@@ -22,7 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chọn ga đi"
-        android:textColor="#000000"
+        android:textColor="@color/textColorBlackLight"
+
         android:textSize="18sp"
         android:layout_marginTop="16dp" />
 
@@ -31,8 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn ga đi"
-        android:backgroundTint="#E0E0E0"
-        android:textColor="#000000"
+        android:backgroundTint="@color/backgroundColorTextLight"
+        android:textColor="@color/textColorBlackLight"
         android:layout_marginTop="8dp" />
 
     <!-- Arrival Station -->
@@ -40,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chọn ga đến"
-        android:textColor="#000000"
+        android:textColor="@color/textColorBlackLight"
         android:textSize="18sp"
         android:layout_marginTop="16dp" />
 
@@ -49,8 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn ga đến"
-        android:backgroundTint="#E0E0E0"
-        android:textColor="#000000"
+        android:backgroundTint="@color/backgroundColorTextLight"
+        android:textColor="@color/textColorBlackLight"
         android:layout_marginTop="8dp" />
 
     <!-- Departure Date -->
@@ -58,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chọn ngày đi"
-        android:textColor="#000000"
+        android:textColor="@color/textColorBlackLight"
         android:textSize="18sp"
         android:layout_marginTop="16dp" />
 
@@ -67,8 +78,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn ngày đi"
-        android:backgroundTint="#E0E0E0"
-        android:textColor="#000000"
+        android:backgroundTint="@color/backgroundColorTextLight"
+        android:textColor="@color/textColorBlackLight"
         android:layout_marginTop="8dp" />
 
     <!-- Search Button -->
@@ -92,3 +103,7 @@
         android:textColor="#FFFFFF"
         android:layout_marginTop="24dp" />
 </LinearLayout>
+
+
+
+<!--    android:background="#F5F5F5"-->

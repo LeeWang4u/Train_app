@@ -1,9 +1,8 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:background="?android:attr/colorBackground">
 
     <!-- Phần 1: Tiêu đề và nút Back -->
     <LinearLayout
@@ -11,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:background="#2196F3"
+        android:background="?attr/colorPrimary"
         android:gravity="center_vertical">
 
         <ImageButton
@@ -21,7 +20,7 @@
             android:src="@drawable/back"
             android:contentDescription="Quay lại"
             android:background="?android:attr/selectableItemBackground"
-            android:tint="#FFFFFF" />
+            android:tint="?android:attr/colorForeground" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -29,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="Chọn ga"
             android:textSize="20sp"
-            android:textColor="#FFFFFF"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
@@ -42,17 +41,91 @@
         android:padding="12dp"
         android:layout_margin="16dp"
         android:background="@drawable/edit_text_background"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="?android:attr/textColorPrimary"
 
+        />
+<!--    android:hintTextColor="?android:attr/textColorHint"-->
     <!-- Phần 3: ListView hiển thị danh sách ga -->
+<!--    <ListView-->
+<!--        android:id="@+id/lvStations"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:padding="0dp"-->
+<!--        android:background="?android:attr/colorBackground"-->
+<!--        android:divider="?android:attr/divider"-->
+<!--        android:dividerHeight="1dp" />-->
+
     <ListView
         android:id="@+id/lvStations"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="0dp"
-        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp" />
-
+        android:dividerHeight="1dp"
+        android:backgroundTint="@color/backgroundColorTextLight"
+        android:textColor="@color/textColorBlackLight"
+        android:listSelector="@android:color/transparent"
+        />
 </LinearLayout>
+
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    >-->
+
+<!--    &lt;!&ndash; Phần 1: Tiêu đề và nút Back &ndash;&gt;-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:padding="16dp"-->
+<!--        android:background="#2196F3"-->
+<!--        android:gravity="center_vertical">-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/btnBack"-->
+<!--            android:layout_width="48dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:src="@drawable/back"-->
+<!--            android:contentDescription="Quay lại"-->
+<!--            android:background="?android:attr/selectableItemBackground"-->
+<!--            android:tint="#FFFFFF" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvTitle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Chọn ga"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:layout_marginStart="8dp" />-->
+<!--    </LinearLayout>-->
+
+<!--    &lt;!&ndash; Phần 2: EditText để tìm kiếm ga &ndash;&gt;-->
+<!--    <EditText-->
+<!--        android:id="@+id/etSearchStation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Nhập tên ga"-->
+<!--        android:padding="12dp"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:background="@drawable/edit_text_background"-->
+<!--        android:textSize="16sp" />-->
+
+<!--    &lt;!&ndash; Phần 3: ListView hiển thị danh sách ga &ndash;&gt;-->
+<!--    <ListView-->
+<!--        android:id="@+id/lvStations"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:padding="0dp"-->
+<!--        android:background="#FFFFFF"-->
+<!--        android:divider="@android:color/darker_gray"-->
+<!--        android:dividerHeight="1dp" />-->
+
+<!--</LinearLayout>-->
+
+<!--&lt;!&ndash;    android:background="#F5F5F5"&ndash;&gt;-->

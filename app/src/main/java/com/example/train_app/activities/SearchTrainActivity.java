@@ -25,6 +25,8 @@ import com.example.train_app.container.request.TripRequest;
 import com.example.train_app.dto.request.TripSeatRequestDTO;
 import com.example.train_app.dto.response.RouteBasedTicketCountResponse;
 import com.example.train_app.model.Station;
+import com.example.train_app.utils.ThemeManager;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -32,11 +34,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchTrainActivity extends AppCompatActivity {
+public class SearchTrainActivity extends BaseActivity {
 
-    private Button btnDepartureStation, btnArrivalStation, btnDepartureDate, btnSearchTrain, btnCheckTicket;
+    private Button btnDepartureStation, btnArrivalStation, btnDepartureDate,
+            btnSearchTrain, btnCheckTicket, btnToggleTheme;
     private String selectedDepartureStation, selectedArrivalStation, selectedDate;
     private List<String> stationNames = new ArrayList<>();
+
 
     private ActivityResultLauncher<Intent> departureStationLauncher;
     private ActivityResultLauncher<Intent> arrivalStationLauncher;
@@ -54,15 +58,15 @@ public class SearchTrainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_train);
 
+
+        btnToggleTheme = findViewById(R.id.btnToggleTheme);
+
         //tao
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-//        List<RouteBasedTicketCountResponse> routes = fetchTicketCountByRoutes();
-//        adapter = new RouteAdapter(routes);
-//        recyclerView.setAdapter(adapter);
-//        startAutoScroll(routes.size());
+
 
         btnDepartureStation = findViewById(R.id.btnDepartureStation);
         btnArrivalStation = findViewById(R.id.btnArrivalStation);
@@ -125,6 +129,18 @@ public class SearchTrainActivity extends AppCompatActivity {
                 }
                 dateLauncher.launch(intent);
             }
+        });
+
+        btnToggleTheme.setOnClickListener(v -> {
+            ThemeManager themeManager = getThemeManager();
+            int currentTheme = themeManager.getTheme();
+            if (currentTheme == ThemeManager.THEME_LIGHT) {
+                themeManager.setTheme(ThemeManager.THEME_DARK);
+            } else {
+                themeManager.setTheme(ThemeManager.THEME_LIGHT);
+            }
+            recreate();
+            // Lưu ý: Activity sẽ được recreate tự động khi theme thay đổi
         });
 
 

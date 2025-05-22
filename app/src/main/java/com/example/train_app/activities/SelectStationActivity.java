@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SelectStationActivity extends AppCompatActivity {
+public class SelectStationActivity extends BaseActivity {
 
     private ImageButton btnBack;
     private EditText etSearchStation;

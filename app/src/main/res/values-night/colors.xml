@@ -1,0 +1,23 @@
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="textColorBlackLight">#FFFFFF</color>
+    <color name="backgroundColorTextLight">#56142B</color>
+
+    <color name="colorBackground">#212121</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorHint">#B0B0B0</color>
+    <color name="colorForeground">#E0E0E0</color>
+    <color name="dividerColor">#424242</color>
+    <color name="editTextBackground">#424242</color>
+
+    <color name="selectStationBackground">#000000</color>
+
+    <color name="darkBackground">#2A0707</color>
+    <color name="lightText">#FFFFFF</color>
+
+
+
+</resources>
