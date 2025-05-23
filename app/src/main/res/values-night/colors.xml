@@ -3,6 +3,8 @@
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="colorBaseBackground">#18191A</color>
+
     <color name="textColorBlackLight">#FFFFFF</color>
     <color name="backgroundColorTextLight">#56142B</color>
 
@@ -14,6 +16,9 @@
     <color name="editTextBackground">#424242</color>
 
     <color name="selectStationBackground">#000000</color>
+
+    <color name="backgroundTripItem">#2F0C0C</color>
+    <color name="colorPreDay">#834A60</color>
 
     <color name="darkBackground">#2A0707</color>
     <color name="lightText">#FFFFFF</color>

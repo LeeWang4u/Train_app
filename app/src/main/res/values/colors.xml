@@ -5,6 +5,7 @@
     <color name="magenta">#D81B60</color>
     <color name="base">#6439E6</color>
     <color name="baseBackground">#2196F3</color>
+    <color name="colorBaseBackground">#F5F5F5</color>
 
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
@@ -24,6 +25,10 @@
 
     <color name="selectStationBackground">#FFFFFF</color>
 <!--    <color name="inputSelectStationBackground">@color/edit_text_background</color>-->
+
+    <color name="backgroundTripItem">#E7E7E7</color>
+    <color name="colorPreDay">#A4A7AD</color>
+
 
 
     <color name="darkBackground">#212121</color>
