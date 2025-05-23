@@ -124,6 +124,8 @@
 // File: DateAdapter.java
 package com.example.train_app.adapters.recyclerView;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -205,11 +207,23 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
             today.set(Calendar.MILLISECOND,0);
 
             boolean isPast = day.before(today);
-            holder.tv.setEnabled(!isPast);
-            holder.tv.setTextColor(holder.tv.getContext()
-                    .getResources().getColor(isPast
-                            ? android.R.color.darker_gray
-                            : android.R.color.black));
+
+            Context context = holder.tv.getContext();
+
+            boolean isDarkMode = (context.getResources().getConfiguration().uiMode
+                    & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+
+            holder.tv.setTextColor(context.getResources().getColor(
+                    isPast ? android.R.color.darker_gray
+                            : (isDarkMode ? android.R.color.white : android.R.color.black)
+            ));
+
+
+//            holder.tv.setEnabled(!isPast);
+//            holder.tv.setTextColor(holder.tv.getContext()
+//                    .getResources().getColor(isPast
+//                            ? android.R.color.darker_gray
+//                            : android.R.color.black));
 
             // Highlight selected
             holder.tv.setSelected(pos == selectedPos);

@@ -3,6 +3,7 @@
     <style name="Base.Theme.Train_app" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorBaseBackground">@color/colorBaseBackground</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,6 +14,8 @@
 
         <item name="selectStationBackground">@color/selectStationBackground</item>
 
+        <item name="backgroundTripItem">@color/backgroundTripItem</item>
+        <item name="colorPreDay">@color/colorPreDay</item>
 
         <item name="colorBackground">@color/colorBackground</item>
         <item name="textColorPrimary">@color/textColorPrimary</item>

@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#E6F0FA"> <!-- Màu nền sáng -->
+    android:background="@color/colorBaseBackground"> <!-- Màu nền sáng -->
 
     <!-- Tiêu đề -->
     <LinearLayout

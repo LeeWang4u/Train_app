@@ -3,7 +3,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="12dp"
-    android:background="@color/selectStationBackground"
+
+    android:background="@color/colorBaseBackground"
     android:gravity="center_vertical">
 
     <!-- stationName bên trái (đậm) -->
@@ -25,3 +26,6 @@
         android:textColor="@color/textColorBlackLight" />
 
 </LinearLayout>
+
+
+<!--    android:background="@color/selectStationBackground"-->

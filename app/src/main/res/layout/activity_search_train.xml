@@ -1,19 +1,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@color/colorBaseBackground">
 
-    >
+<!--    <ImageButton-->
+<!--        android:id="@+id/btnToggleTheme"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:contentDescription="themes"-->
+<!--        android:src="@drawable/outline_dark_mode"-->
+<!--        android:background="@color/colorPrimaryDark"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:tint="#FFFFFF" />-->
 
-    <Button
+    <ImageButton
         android:id="@+id/btnToggleTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chuyển đổi Theme"
-        android:backgroundTint="?colorAccent"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="16dp" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="themes"
+        android:src="@drawable/outline_dark_mode"
+        android:background="@drawable/theme_button_background"
+        android:layout_margin="16dp"
+        android:scaleType="centerInside"
+        android:layout_gravity="end"
+        app:tint="@android:color/white" />
+
+<!--    <Button-->
+<!--        android:id="@+id/btnToggleTheme"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Chuyển đổi Theme"-->
+<!--        android:backgroundTint="?colorAccent"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:layout_marginBottom="16dp" />-->
 
     <!-- Header Image (Placeholder for banner) -->
 <!--    <ImageView-->

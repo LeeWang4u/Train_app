@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class SelectDateActivity extends AppCompatActivity
+public class SelectDateActivity extends BaseActivity
         implements MonthPagerAdapter.OnDateSelectedListener {
     private TextView tvTitle, tvDepartureDate, tvMonth;
     private ImageButton btnBack, btnPrevMonth, btnNextMonth;

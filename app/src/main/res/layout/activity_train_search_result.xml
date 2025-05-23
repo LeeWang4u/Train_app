@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@color/colorBaseBackground"
     android:orientation="vertical">
 
     <!-- Header -->
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
             android:text="08/05/2025"
-            android:textColor="#A4A7AD"
+            android:textColor="@color/colorPreDay"
             android:textSize="14sp" />
 
         <TextView
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
             android:text="08/05/2025"
-            android:textColor="#000000"
+            android:textColor="@color/textColorBlackLight"
             android:textSize="16sp" />
 
         <TextView
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
             android:text="08/05/2025"
-            android:textColor="#A4A7AD"
+            android:textColor="@color/colorPreDay"
             android:textSize="14sp" />
 
         <ImageButton
