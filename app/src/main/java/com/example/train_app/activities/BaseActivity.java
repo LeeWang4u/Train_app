@@ -1,6 +1,7 @@
 package com.example.train_app.activities;
 
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,5 +20,10 @@ public class BaseActivity extends AppCompatActivity {
 
     public ThemeManager getThemeManager() {
         return themeManager;
+    }
+
+    public boolean isDarkMode() {
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
     }
 }

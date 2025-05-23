@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -37,7 +38,8 @@ import retrofit2.Response;
 public class SearchTrainActivity extends BaseActivity {
 
     private Button btnDepartureStation, btnArrivalStation, btnDepartureDate,
-            btnSearchTrain, btnCheckTicket, btnToggleTheme;
+            btnSearchTrain, btnCheckTicket;
+    private ImageButton btnToggleTheme;
     private String selectedDepartureStation, selectedArrivalStation, selectedDate;
     private List<String> stationNames = new ArrayList<>();
 
@@ -60,6 +62,14 @@ public class SearchTrainActivity extends BaseActivity {
 
 
         btnToggleTheme = findViewById(R.id.btnToggleTheme);
+
+        ThemeManager themeManager = getThemeManager();
+        int currentTheme = themeManager.getTheme();
+
+// Gán icon ban đầu
+        btnToggleTheme.setImageResource(currentTheme == ThemeManager.THEME_LIGHT
+                ? R.drawable.outline_dark_mode
+                : R.drawable.outline_light_mode);
 
         //tao
         recyclerView = findViewById(R.id.recyclerView);
@@ -132,16 +142,29 @@ public class SearchTrainActivity extends BaseActivity {
         });
 
         btnToggleTheme.setOnClickListener(v -> {
-            ThemeManager themeManager = getThemeManager();
-            int currentTheme = themeManager.getTheme();
+            int newTheme;
             if (currentTheme == ThemeManager.THEME_LIGHT) {
-                themeManager.setTheme(ThemeManager.THEME_DARK);
+                newTheme = ThemeManager.THEME_DARK;
+                btnToggleTheme.setImageResource(R.drawable.outline_light_mode); // đổi về light mode
             } else {
-                themeManager.setTheme(ThemeManager.THEME_LIGHT);
+                newTheme = ThemeManager.THEME_LIGHT;
+                btnToggleTheme.setImageResource(R.drawable.outline_dark_mode); // đổi về dark mode
             }
-            recreate();
-            // Lưu ý: Activity sẽ được recreate tự động khi theme thay đổi
+            themeManager.setTheme(newTheme);
+            recreate(); // Activity sẽ được recreate với theme mới
         });
+
+//        btnToggleTheme.setOnClickListener(v -> {
+//            ThemeManager themeManager = getThemeManager();
+//            int currentTheme = themeManager.getTheme();
+//            if (currentTheme == ThemeManager.THEME_LIGHT) {
+//                themeManager.setTheme(ThemeManager.THEME_DARK);
+//            } else {
+//                themeManager.setTheme(ThemeManager.THEME_LIGHT);
+//            }
+//            recreate();
+//            // Lưu ý: Activity sẽ được recreate tự động khi theme thay đổi
+//        });
 
 
         btnSearchTrain.setOnClickListener(new View.OnClickListener() {

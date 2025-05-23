@@ -4,4 +4,8 @@
     android:gravity="center"
     android:textSize="14sp"
     android:background="@drawable/date_selector"
+    android:textColor="@color/textColorBlackLight"
     android:layout_margin="2dp" />
+
+
+<!--    android:background="@drawable/date_selector"-->
