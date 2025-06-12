@@ -8,7 +8,7 @@ public class HTTPService {
 
 
 
-    public static final String APP_PATH = "http://192.168.1.47:8080/api/";
+    public static final String APP_PATH = "http://192.168.88.59:8080/api/";
 
 //    public static final String APP_PATH = "http://192.168.1.37:8080/api/";
 

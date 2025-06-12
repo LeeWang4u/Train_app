@@ -43,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SelectSeatActivity extends AppCompatActivity {
+public class SelectSeatActivity extends BaseActivity {
 
     private LinearLayout fragmentContainer;
     private ProgressBar progressBar;

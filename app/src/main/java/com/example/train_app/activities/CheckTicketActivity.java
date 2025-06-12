@@ -34,7 +34,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CheckTicketActivity extends AppCompatActivity {
+public class CheckTicketActivity extends BaseActivity {
     private RadioGroup radioGroup;
     private RadioButton radioTicketCode, radioSeatCode;
     private EditText editTextCode;

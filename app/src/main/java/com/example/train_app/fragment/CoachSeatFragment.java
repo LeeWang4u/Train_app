@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.train_app.R;
+import com.example.train_app.activities.InfoActivity;
 import com.example.train_app.activities.SelectSeatActivity;
 import com.example.train_app.api.ApiService;
 import com.example.train_app.api.HTTPService;
@@ -32,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CoachSeatFragment extends Fragment {
+public class CoachSeatFragment extends BaseFragment {
 
     private GridLayout gridSeats;
 
@@ -105,9 +106,8 @@ public class CoachSeatFragment extends Fragment {
     private void setSeatAvailableClick(View seatView, LinearLayout background,SelectSeatReqDTO selectSeatReqDTO) {
         seatView.setOnClickListener(v -> {
             if (ReservationSeat.sumSelectedSeat() < 5) {
-                background.setBackgroundResource(R.drawable.bg_seat_selected);
 
-                TicketReservationReqDTO ticketReservation = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), "Hà Nội", "Sài Gòn", 19);
+                TicketReservationReqDTO ticketReservation = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), CurrentTrip.getCurrentTrip().getDepartureStation(), CurrentTrip.getCurrentTrip().getArrivalStation(), CurrentTrip.getCurrentTrip().getTripId());
                 ApiService apiService = HTTPService.getInstance().create(ApiService.class);
                 Call<TicketResponseDTO> callReserve = apiService.reserveTicket(ticketReservation);
                 callReserve.enqueue(new Callback<TicketResponseDTO>() {
@@ -117,10 +117,15 @@ public class CoachSeatFragment extends Fragment {
                             Log.d("TICKET", "Giữ vé thành công!");
                             TicketResponseDTO ticketResponseDTO= response.body();
                             selectSeatReqDTO.setTicketResponseDTO(ticketResponseDTO);
+                            background.setBackgroundResource(R.drawable.bg_seat_selected);
+
                             ReservationSeat.addSeat(selectSeatReqDTO);
                             setSeatSelectedClick(seatView, background, selectSeatReqDTO);
                             ((SelectSeatActivity) getActivity()).updateSummary();
                         } else {
+                            Toast.makeText(getActivity(),
+                                    "Vé đã được đặt trước",
+                                    Toast.LENGTH_LONG).show();
                             Log.e("TICKET", "Lỗi giữ vé: " + response.code());
                         }
                     }

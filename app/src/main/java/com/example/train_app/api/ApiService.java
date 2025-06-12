@@ -25,10 +25,10 @@ import com.example.train_app.dto.response.TicketResponseDTO;
 import com.example.train_app.model.Trip;
 
 public interface ApiService {
+
+
     @GET("station/all")
     Call<List<Station>> getAllStations();
-
-
     // Trip
     @POST("trips/searchs")
     Call<List<Trip>> searchTripsByStationsAndDate(@Body TripRequest tripRequest);

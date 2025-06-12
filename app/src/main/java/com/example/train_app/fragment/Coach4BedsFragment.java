@@ -34,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Coach4BedsFragment extends Fragment {
+public class Coach4BedsFragment extends BaseFragment {
     private LinearLayout layoutCabins;
     private LayoutInflater inflater;
     public int iii = 0;
@@ -148,9 +148,8 @@ public class Coach4BedsFragment extends Fragment {
     private void setSeatAvailableClick(View seatView, View indicator, SelectSeatReqDTO selectSeatReqDTO ) {
         seatView.setOnClickListener(v -> {
             if (ReservationSeat.sumSelectedSeat() < 5) {
-                indicator.setBackgroundResource(R.drawable.bg_seat_selected);
+                TicketReservationReqDTO ticketReservation = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), CurrentTrip.getCurrentTrip().getDepartureStation(), CurrentTrip.getCurrentTrip().getArrivalStation(), CurrentTrip.getCurrentTrip().getTripId());
 
-                TicketReservationReqDTO ticketReservation = new TicketReservationReqDTO(selectSeatReqDTO.getSeatId(), "Hà Nội", "Sài Gòn", 19);
                 ApiService apiService = HTTPService.getInstance().create(ApiService.class);
                 Call<TicketResponseDTO> callReserve = apiService.reserveTicket(ticketReservation);
                 callReserve.enqueue(new Callback<TicketResponseDTO>() {
@@ -160,11 +159,14 @@ public class Coach4BedsFragment extends Fragment {
                             Log.d("TICKET", "Giữ vé thành công!");
                             TicketResponseDTO ticketResponseDTO = response.body();
                            selectSeatReqDTO.setTicketResponseDTO(ticketResponseDTO);
-
+                            indicator.setBackgroundResource(R.drawable.bg_seat_selected);
                             ReservationSeat.addSeat(selectSeatReqDTO);
                             setSeatSelectedClick(seatView, indicator, selectSeatReqDTO);
                             ((SelectSeatActivity) getActivity()).updateSummary();
                         } else {
+                            Toast.makeText(getActivity(),
+                                    "Vé đã được đặt trước",
+                                    Toast.LENGTH_LONG).show();
                             Log.e("TICKET", "Lỗi giữ vé: " + response.code());
                         }
                     }
@@ -197,6 +199,7 @@ public class Coach4BedsFragment extends Fragment {
                         setSeatAvailableClick(seatView, indicator, selectSeatReqDTO);
                         ((SelectSeatActivity) getActivity()).updateSummary();
                     } else {
+
                         Log.e("Reserve", "Lỗi hủy giữ chỗ : " + response.code());
                     }
                 }

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#FFFFFF">
+    android:background="@color/colorBackground">
 
     <!-- Header -->
     <LinearLayout
@@ -37,7 +37,7 @@
             android:text="Kiểm tra vé"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/textColorBlackLight"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
@@ -91,8 +91,8 @@
         android:layout_height="wrap_content"
         android:text="Kiểm tra"
         android:layout_marginTop="20dp"
-        android:textColor="#FFFFFF"
-        android:background="#000000"
+        android:textColor="@color/backgroundColorTextLight"
+        android:background="@color/textColorBlackLight"
         android:padding="12dp" />
     <ScrollView
         android:layout_width="match_parent"
