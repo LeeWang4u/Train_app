@@ -37,6 +37,7 @@ public class ReservationSeat {
     public static BigDecimal getTotalPrice(){
         return totalPrice;
     }
+    public static BigDecimal clearTotalPrice() {return totalPrice=BigDecimal.ZERO;};
     public static void setFinalTotalPrice(BigDecimal price, BigDecimal finalPrice){
         finalTotalPrice = getTotalPrice().subtract(price).add(finalPrice);
     }

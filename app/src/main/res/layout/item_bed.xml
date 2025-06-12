@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5"
-                android:textColor="#000000"
+                android:textColor="@color/textColorBlackLight"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1074K"
-                android:textColor="#666666"
+                android:textColor="@color/textColorHint"
                 android:textSize="12sp" />
         </LinearLayout>
     </FrameLayout>

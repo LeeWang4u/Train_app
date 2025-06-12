@@ -56,7 +56,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.momo.momo_partner.AppMoMoLib;
 
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends BaseActivity {
     // Views
     private LinearLayout fragmentContainer;
     private EditText inputFullName, inputIdNumber, inputPhone,inputEmail;
@@ -166,6 +166,10 @@ public class InfoActivity extends AppCompatActivity {
                     .setPositiveButton("Đồng ý", (dialog, which) -> {
                         callConfirmTicketApi();
                         handleCallConfirmTicket();
+                        ReservationSeat.clearSelectedSeats();
+                        ReservationSeat.clearTotalPrice();
+                        Intent intent = new Intent(InfoActivity.this, SearchTrainActivity.class);
+                        startActivity(intent);
                     })
                     .setNegativeButton("Không", null)
                     .show();
