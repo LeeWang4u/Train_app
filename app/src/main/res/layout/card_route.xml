@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="#000000"
+            android:textColor="@color/textColorBlackLight"
             android:textSize="24sp"
             android:textStyle="bold"
             card_view:layout_constraintBottom_toBottomOf="parent"
@@ -34,8 +34,8 @@
             android:layout_marginEnd="8dp"
             android:rotation="45"
             android:textAlignment="center"
-            android:textColor="#555555"
-            android:textSize="18sp"
+            android:textColor="@color/textColorBlackLight"
+            android:textSize="20sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

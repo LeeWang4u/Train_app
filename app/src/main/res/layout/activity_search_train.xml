@@ -44,6 +44,15 @@
 <!--        android:src="@drawable/he_thong_duong_sat_viet_nam"-->
 <!--        android:scaleType="centerCrop"-->
 <!--        android:contentDescription="Banner Image" />-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chặng đi nổi bật"
+        android:textColor="@color/textColorBlackLight"
+        android:textSize="30sp"
+        android:layout_marginBottom="16dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
